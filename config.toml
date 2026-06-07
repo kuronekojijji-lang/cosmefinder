@@ -1,0 +1,47 @@
+baseURL       = "https://cosmefinder.com/"
+languageCode  = "ja"
+title         = "コスメファインダー｜顔パーツで選ぶ日本コスメ"
+paginate      = 12
+
+[minify]
+  disableJS = true
+
+[params]
+  description  = "顔のパーツをクリックするだけで、あなたにぴったりの日本コスメが見つかるツールと、プチプラからデパコスまで徹底比較するコスメ情報サイトです。"
+  author       = "コスメファインダー編集部"
+  amazonID     = "YOUR-AFFILIATE-ID"
+  rakutenID    = "YOUR-RAKUTEN-ID"
+  twitterSite  = "@cosme_finder"
+
+[taxonomies]
+  category = "categories"
+  tag      = "tags"
+
+[menu]
+  [[menu.main]]
+    name   = "コスメを探す"
+    url    = "/tool/"
+    weight = 1
+  [[menu.main]]
+    name   = "リップ"
+    url    = "/categories/lip/"
+    weight = 2
+  [[menu.main]]
+    name   = "アイメイク"
+    url    = "/categories/eye/"
+    weight = 3
+  [[menu.main]]
+    name   = "ファンデ・下地"
+    url    = "/categories/skin/"
+    weight = 4
+  [[menu.main]]
+    name   = "チーク"
+    url    = "/categories/cheek/"
+    weight = 5
+  [[menu.main]]
+    name   = "プチプラ特集"
+    url    = "/tags/プチプラ/"
+    weight = 6
+
+[markup.goldmark.renderer]
+  unsafe = true

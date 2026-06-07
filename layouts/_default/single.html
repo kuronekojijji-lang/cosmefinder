@@ -1,0 +1,85 @@
+{{ define "main" }}
+<div class="page-wrap">
+  <!-- ── Main content ── -->
+  <main>
+    <article>
+      <header class="article-header">
+        {{ if .Params.categories }}
+        <div>{{ range .Params.categories }}<span class="article-cat">{{ . }}</span>{{ end }}</div>
+        {{ end }}
+        <h1 class="article-title">{{ .Title }}</h1>
+        <div class="article-meta">
+          <span>📅 {{ .Date.Format "2006年01月02日" }}</span>
+          <span>✏️ {{ .Site.Params.author }}</span>
+          {{ if .ReadingTime }}<span>⏱ 約{{ .ReadingTime }}分で読めます</span>{{ end }}
+        </div>
+      </header>
+
+      {{ if .Params.zone }}
+      <div class="tool-cta">
+        <p>💄 <strong>{{ .Title | truncate 25 }}</strong> に関係するコスメをツールで絞り込んで探せます</p>
+        <a href="/tool/?zone={{ .Params.zone }}{{ if .Params.look }}&look={{ .Params.look }}{{ end }}{{ if .Params.budget }}&budget={{ .Params.budget }}{{ end }}">
+          コスメマネキンで探す →
+        </a>
+      </div>
+      {{ end }}
+
+      <div class="article-body">
+        {{ .Content }}
+      </div>
+
+      {{ if .Params.zone }}
+      <div class="tool-cta" style="margin-top:36px">
+        <p>この記事で紹介したコスメをツールで比較・検索できます</p>
+        <a href="/tool/?zone={{ .Params.zone }}{{ if .Params.look }}&look={{ .Params.look }}{{ end }}">
+          🔍 コスメマネキンで比較する
+        </a>
+      </div>
+      {{ end }}
+    </article>
+  </main>
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="sidebar-block">
+      <h3>💄 カテゴリで探す</h3>
+      <ul>
+        <li><a href="/tool/?zone=lip">💋 リップ</a></li>
+        <li><a href="/tool/?zone=eye">👁 アイシャドウ</a></li>
+        <li><a href="/tool/?zone=skin">✨ ファンデ・下地</a></li>
+        <li><a href="/tool/?zone=cheek">🌸 チーク</a></li>
+        <li><a href="/tool/?zone=eyebrow">🖊 アイブロウ</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-block">
+      <h3>💰 予算別で探す</h3>
+      <ul>
+        <li><a href="/tool/?budget=low">～¥1,000 プチプラ</a></li>
+        <li><a href="/tool/?budget=mid">¥1,000～¥3,000 ミドル</a></li>
+        <li><a href="/tool/?budget=high">¥3,000～ デパコス</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-block">
+      <h3>✨ メイクの雰囲気</h3>
+      <ul>
+        <li><a href="/tool/?look=natural">🌿 ナチュラル</a></li>
+        <li><a href="/tool/?look=trendy">🔥 トレンド</a></li>
+        <li><a href="/tool/?look=gorgeous">💎 ゴージャス</a></li>
+        <li><a href="/tool/?look=office">💼 オフィス</a></li>
+        <li><a href="/tool/?look=casual">👟 カジュアル</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-block">
+      <h3>📝 最新記事</h3>
+      <ul>
+        {{ range first 5 (where .Site.RegularPages "Type" "posts") }}
+        <li><a href="{{ .Permalink }}">{{ .Title | truncate 28 }}</a></li>
+        {{ end }}
+      </ul>
+    </div>
+  </aside>
+</div>
+{{ end }}

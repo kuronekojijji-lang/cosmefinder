@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div style="max-width:1100px;margin:0 auto;padding:28px 20px">
+  <h1 style="font-size:24px;font-weight:800;color:#7A4F4A;margin-bottom:8px">{{ .Title }}</h1>
+  {{ if .Description }}<p style="color:#997070;margin-bottom:24px">{{ .Description }}</p>{{ end }}
+
+  {{ if .Params.zone }}
+  <div class="tool-cta" style="margin-bottom:28px">
+    <p>このカテゴリのコスメをツールで絞り込んで探せます</p>
+    <a href="/tool/?zone={{ .Params.zone }}">コスメマネキンで探す →</a>
+  </div>
+  {{ end }}
+
+  <div class="card-grid">
+    {{ range .Pages }}
+    <a href="{{ .Permalink }}" class="card" style="display:block;color:inherit;text-decoration:none">
+      <div class="card-img" style="background:linear-gradient(135deg,#F2D0D8,#FDE8E0);display:flex;align-items:center;justify-content:center;font-size:40px">
+        {{ if .Params.icon }}{{ .Params.icon }}{{ else }}💄{{ end }}
+      </div>
+      <div class="card-body">
+        {{ if .Params.categories }}<div class="card-cat">{{ index .Params.categories 0 }}</div>{{ end }}
+        <div class="card-title">{{ .Title }}</div>
+        <div class="card-date">{{ .Date.Format "2006.01.02" }}</div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

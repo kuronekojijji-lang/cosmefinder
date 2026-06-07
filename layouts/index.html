@@ -1,0 +1,69 @@
+{{ define "main" }}
+<!-- ── Hero ── -->
+<div style="background:linear-gradient(135deg,#F2D0D8 0%,#FDF0E8 100%);padding:40px 20px;text-align:center;border-bottom:1px solid #ECC8D0">
+  <div style="max-width:700px;margin:0 auto">
+    <p style="font-size:13px;color:#D4849A;font-weight:700;letter-spacing:1px;margin-bottom:8px">💄 COSME FINDER</p>
+    <h1 style="font-size:32px;font-weight:800;color:#7A4F4A;line-height:1.3;margin-bottom:12px">顔パーツをタップして<br>ぴったりのコスメを見つけよう</h1>
+    <p style="font-size:15px;color:#997070;margin-bottom:0">リップ・目元・肌・チーク・眉のパーツから、日本の人気コスメをAmazon・楽天でかんたんに探せます</p>
+  </div>
+</div>
+
+<!-- ── Tool embed ── -->
+<div style="max-width:1200px;margin:32px auto;padding:0 20px">
+  <h2 style="font-size:20px;font-weight:800;color:#7A4F4A;margin-bottom:16px;text-align:center">🔍 コスメマネキンで探す</h2>
+  <iframe
+    src="/tool/index.html"
+    class="tool-frame"
+    height="620"
+    title="コスメマネキンツール"
+    loading="lazy">
+  </iframe>
+</div>
+
+<!-- ── Feature blocks ── -->
+<div style="max-width:1100px;margin:0 auto 40px;padding:0 20px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:40px">
+    <a href="/tool/?zone=lip" style="display:block;background:white;border-radius:14px;padding:24px 20px;text-align:center;box-shadow:0 2px 14px rgba(160,80,80,.10);text-decoration:none;transition:transform .18s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+      <div style="font-size:36px;margin-bottom:8px">💋</div>
+      <div style="font-size:15px;font-weight:700;color:#7A4F4A">リップを探す</div>
+      <div style="font-size:12px;color:#997070;margin-top:4px">グロス・マット・ティント</div>
+    </a>
+    <a href="/tool/?zone=eye" style="display:block;background:white;border-radius:14px;padding:24px 20px;text-align:center;box-shadow:0 2px 14px rgba(160,80,80,.10);text-decoration:none;transition:transform .18s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+      <div style="font-size:36px;margin-bottom:8px">👁</div>
+      <div style="font-size:15px;font-weight:700;color:#7A4F4A">アイシャドウを探す</div>
+      <div style="font-size:12px;color:#997070;margin-top:4px">シマー・マット・グリッター</div>
+    </a>
+    <a href="/tool/?zone=skin" style="display:block;background:white;border-radius:14px;padding:24px 20px;text-align:center;box-shadow:0 2px 14px rgba(160,80,80,.10);text-decoration:none;transition:transform .18s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+      <div style="font-size:36px;margin-bottom:8px">✨</div>
+      <div style="font-size:15px;font-weight:700;color:#7A4F4A">ファンデを探す</div>
+      <div style="font-size:12px;color:#997070;margin-top:4px">ツヤ・マット・日焼け止め</div>
+    </a>
+    <a href="/tool/?zone=cheek" style="display:block;background:white;border-radius:14px;padding:24px 20px;text-align:center;box-shadow:0 2px 14px rgba(160,80,80,.10);text-decoration:none;transition:transform .18s" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
+      <div style="font-size:36px;margin-bottom:8px">🌸</div>
+      <div style="font-size:15px;font-weight:700;color:#7A4F4A">チークを探す</div>
+      <div style="font-size:12px;color:#997070;margin-top:4px">パウダー・クリーム</div>
+    </a>
+  </div>
+
+  <!-- ── Latest posts ── -->
+  <h2 style="font-size:22px;font-weight:800;color:#7A4F4A;margin-bottom:20px">📝 コスメ情報・ランキング記事</h2>
+  <div class="card-grid">
+    {{ range first 8 (where .Site.RegularPages "Type" "posts") }}
+    <a href="{{ .Permalink }}" class="card" style="display:block;color:inherit;text-decoration:none">
+      {{ if .Params.thumbnail }}
+      <img class="card-img" src="{{ .Params.thumbnail }}" alt="{{ .Title }}" loading="lazy">
+      {{ else }}
+      <div class="card-img" style="background:linear-gradient(135deg,#F2D0D8,#FDE8E0);display:flex;align-items:center;justify-content:center;font-size:40px">
+        {{ if .Params.icon }}{{ .Params.icon }}{{ else }}💄{{ end }}
+      </div>
+      {{ end }}
+      <div class="card-body">
+        {{ if .Params.categories }}<div class="card-cat">{{ index .Params.categories 0 }}</div>{{ end }}
+        <div class="card-title">{{ .Title }}</div>
+        <div class="card-date">{{ .Date.Format "2006.01.02" }}</div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コスメマネキン | 顔パーツで選ぶ日本コスメ</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --rose:#D4849A;--rose-light:#FFF0EE;--rose-mid:#F5C8D0;
+  --brown:#7A4F4A;--cream:#FDF8F5;--text:#3D2020;
+  --text-light:#997070;--white:#FFFFFF;
+  --shadow:0 2px 14px rgba(160,80,80,0.10);
+}
+body{font-family:'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+/* ── Header ── */
+header{background:linear-gradient(135deg,#F2D0D8 0%,#F8E8E0 100%);padding:14px 24px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #ECC8D0}
+header .logo{font-size:26px}
+header h1{font-size:19px;color:var(--brown);font-weight:800;letter-spacing:-0.3px}
+header p{font-size:12px;color:var(--text-light);margin-top:1px}
+/* ── Look bar ── */
+.look-bar{background:var(--white);padding:10px 20px;border-bottom:1px solid #F0DDD9;display:flex;gap:6px;align-items:center;overflow-x:auto;flex-shrink:0}
+.look-bar-label{font-size:12px;color:var(--text-light);white-space:nowrap;margin-right:2px;font-weight:600}
+.look-btn{padding:5px 14px;border-radius:20px;border:1.5px solid var(--rose-mid);background:transparent;color:var(--brown);font-size:12px;cursor:pointer;white-space:nowrap;transition:all .18s;font-family:inherit}
+.look-btn:hover{border-color:var(--rose);color:var(--rose)}
+.look-btn.active{background:var(--rose);color:white;border-color:var(--rose)}
+/* ── Layout ── */
+.main{display:grid;grid-template-columns:310px 1fr;height:calc(100vh - 98px)}
+/* ── Face panel ── */
+.face-panel{background:var(--white);border-right:1px solid #F0DDD9;display:flex;flex-direction:column;align-items:center;padding:20px 14px;overflow-y:auto}
+.face-hint{font-size:12px;color:var(--text-light);margin-bottom:14px;text-align:center;line-height:1.6}
+.face-hint strong{display:block;color:var(--rose);font-size:13px;margin-bottom:2px}
+/* ── SVG face ── */
+.mannequin-face .zone{cursor:pointer}
+/* ── Budget filter ── */
+.budget-wrap{width:100%;margin-top:18px;padding-top:14px;border-top:1px solid #F0DDD9}
+.filter-label{font-size:11px;color:var(--text-light);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
+.chip-row{display:flex;flex-wrap:wrap;gap:5px}
+.chip{padding:4px 11px;border-radius:12px;border:1px solid #E0C8C4;background:transparent;color:var(--text);font-size:12px;cursor:pointer;transition:all .15s;font-family:inherit}
+.chip:hover{border-color:var(--rose);color:var(--rose)}
+.chip.active{background:var(--rose);color:white;border-color:var(--rose)}
+/* ── Products panel ── */
+.products-panel{overflow-y:auto;padding:22px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.panel-head h2{font-size:17px;color:var(--brown);font-weight:700}
+.zone-badge{display:inline-flex;align-items:center;gap:5px;background:var(--rose-light);color:var(--rose);padding:3px 11px;border-radius:11px;font-size:12px;font-weight:700;border:1px solid var(--rose-mid)}
+/* ── Zone filters ── */
+.zone-filters{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:18px;background:var(--white);padding:12px 14px;border-radius:10px;box-shadow:var(--shadow)}
+/* ── Products grid ── */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:14px}
+.product-card{background:white;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s}
+.product-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(160,80,80,0.16)}
+.product-img{height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:white;padding:8px}
+.product-img .brand-badge{font-size:11px;font-weight:800;letter-spacing:.5px;background:rgba(0,0,0,.18);padding:3px 8px;border-radius:8px;text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.product-img .img-icon{font-size:28px}
+.product-info{padding:11px}
+.product-brand{font-size:10px;color:var(--text-light);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:1px}
+.product-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.4}
+.product-desc{font-size:11px;color:var(--text-light);margin-bottom:8px;line-height:1.5}
+.product-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.product-price{font-size:15px;font-weight:800;color:var(--brown)}
+.tags{display:flex;gap:3px;flex-wrap:wrap}
+.tag{font-size:10px;background:var(--rose-light);color:var(--rose);padding:2px 6px;border-radius:5px;border:1px solid var(--rose-mid)}
+.buy-btns{display:flex;gap:5px}
+.buy-btn{flex:1;padding:7px 4px;border-radius:7px;border:none;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center;transition:opacity .15s;display:block;font-family:inherit}
+.btn-amazon{background:#FF9900;color:white}
+.btn-rakuten{background:#BF0000;color:white}
+.buy-btn:hover{opacity:.82}
+/* ── Empty state ── */
+.empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-light)}
+.empty-state .e-icon{font-size:52px;margin-bottom:14px}
+.empty-state p{font-size:14px;line-height:1.8}
+/* ── Responsive ── */
+@media(max-width:740px){
+  .main{grid-template-columns:1fr;height:auto}
+  .face-panel{border-right:none;border-bottom:1px solid #F0DDD9}
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">💄</div>
+  <div>
+    <h1>コスメマネキン</h1>
+    <p>顔のパーツをタップして、ぴったりのコスメを探そう</p>
+  </div>
+</header>
+
+<div class="look-bar">
+  <span class="look-bar-label">メイクの雰囲気：</span>
+  <button class="look-btn active" data-look="all">すべて</button>
+  <button class="look-btn" data-look="natural">ナチュラル</button>
+  <button class="look-btn" data-look="trendy">トレンド</button>
+  <button class="look-btn" data-look="gorgeous">ゴージャス</button>
+  <button class="look-btn" data-look="casual">カジュアル</button>
+  <button class="look-btn" data-look="office">オフィス</button>
+</div>
+
+<div class="main">
+  <!-- ── LEFT: Face panel ── -->
+  <div class="face-panel">
+    <div class="face-hint">
+      <strong>👇 パーツをクリック</strong>
+      気になる部位を選ぶとコスメが表示されます
+    </div>
+
+    <svg id="face-svg" class="mannequin-face" viewBox="0 0 300 450" xmlns="http://www.w3.org/2000/svg" width="270" height="405" style="max-width:100%">
+      <defs>
+        <filter id="fshadow" x="-12%" y="-6%" width="124%" height="118%">
+          <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#B08060" flood-opacity="0.18"/>
+        </filter>
+      </defs>
+
+      <!-- ── Hair: flat bob ── -->
+      <ellipse cx="150" cy="72" rx="126" ry="82" fill="#1A0906"/>
+      <rect x="24" y="72" width="252" height="64" fill="#1A0906"/>
+      <!-- Bob side strands -->
+      <rect x="24" y="128" width="32" height="112" rx="16" fill="#1A0906"/>
+      <rect x="244" y="128" width="32" height="112" rx="16" fill="#1A0906"/>
+      <!-- Hair surface sheen (flat design) -->
+      <ellipse cx="118" cy="58" rx="62" ry="28" fill="#2C1008" opacity="0.7"/>
+
+      <!-- ── Neck ── -->
+      <rect x="118" y="392" width="64" height="58" rx="8" fill="#F5DBC6"/>
+
+      <!-- ── Face oval ── -->
+      <ellipse cx="150" cy="252" rx="118" ry="156" fill="#F5DBC6" filter="url(#fshadow)"/>
+
+      <!-- ── Ears ── -->
+      <ellipse cx="32" cy="248" rx="16" ry="24" fill="#ECCDB8"/>
+      <ellipse cx="32" cy="248" rx="10" ry="15" fill="none" stroke="#D8B09A" stroke-width="1.5"/>
+      <ellipse cx="268" cy="248" rx="16" ry="24" fill="#ECCDB8"/>
+      <ellipse cx="268" cy="248" rx="10" ry="15" fill="none" stroke="#D8B09A" stroke-width="1.5"/>
+
+      <!-- ── Zone overlays: always-on subtle tint, JS drives opacity ── -->
+      <ellipse id="ov-skin"    cx="150" cy="174" rx="96"  ry="67"  fill="#FF8050" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
+      <ellipse id="ov-eye-l"  cx="104" cy="226" rx="38"  ry="23"  fill="#8060E8" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
+      <ellipse id="ov-eye-r"  cx="196" cy="226" rx="38"  ry="23"  fill="#8060E8" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
+      <path id="ov-brow-l" d="M72,202 Q106,186 140,198" stroke="#5050C8" stroke-width="24" fill="none" opacity="0.07" stroke-linecap="round" style="pointer-events:none;transition:opacity .22s"/>
+      <path id="ov-brow-r" d="M160,198 Q194,186 228,202" stroke="#5050C8" stroke-width="24" fill="none" opacity="0.07" stroke-linecap="round" style="pointer-events:none;transition:opacity .22s"/>
+      <ellipse id="ov-cheek-l" cx="66"  cy="276" rx="47"  ry="38"  fill="#FF5070" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
+      <ellipse id="ov-cheek-r" cx="234" cy="276" rx="47"  ry="38"  fill="#FF5070" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
+      <ellipse id="ov-lip"    cx="150" cy="338" rx="53"  ry="28"  fill="#FF2050" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
+
+      <!-- ── Eyebrows: clean flat arcs ── -->
+      <path d="M76,206 Q106,191 136,202" stroke="#1A0906" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+      <path d="M164,202 Q194,191 224,206" stroke="#1A0906" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+
+      <!-- ── Left eye ── -->
+      <path d="M76,228 Q104,210 132,228 Q104,246 76,228Z" fill="#F8F2E8"/>
+      <circle cx="104" cy="228" r="13" fill="#3A1E0C"/>
+      <circle cx="104" cy="228" r="7.5" fill="#080302"/>
+      <circle cx="100" cy="223" r="2.8" fill="white"/>
+      <circle cx="107" cy="232" r="1.5" fill="white" opacity="0.5"/>
+      <path d="M77,221 Q90,214 104,217" stroke="#080302" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M104,217 Q118,214 131,221" stroke="#080302" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M80,234 Q104,242 128,234" stroke="#3A1E0C" stroke-width="1" fill="none" opacity="0.4"/>
+
+      <!-- ── Right eye ── -->
+      <path d="M168,228 Q196,210 224,228 Q196,246 168,228Z" fill="#F8F2E8"/>
+      <circle cx="196" cy="228" r="13" fill="#3A1E0C"/>
+      <circle cx="196" cy="228" r="7.5" fill="#080302"/>
+      <circle cx="192" cy="223" r="2.8" fill="white"/>
+      <circle cx="199" cy="232" r="1.5" fill="white" opacity="0.5"/>
+      <path d="M169,221 Q182,214 196,217" stroke="#080302" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M196,217 Q210,214 223,221" stroke="#080302" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M172,234 Q196,242 220,234" stroke="#3A1E0C" stroke-width="1" fill="none" opacity="0.4"/>
+
+      <!-- ── Nose: minimal flat ── -->
+      <path d="M146,258 Q140,280 146,291 Q150,296 154,291 Q160,280 154,258" stroke="#CFA890" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="145" cy="290" rx="6" ry="4" fill="#C89878" opacity="0.32"/>
+      <ellipse cx="155" cy="290" rx="6" ry="4" fill="#C89878" opacity="0.32"/>
+
+      <!-- ── Cheek blush (decorative) ── -->
+      <ellipse cx="68"  cy="276" rx="34" ry="26" fill="#FFB0A0" opacity="0.12"/>
+      <ellipse cx="232" cy="276" rx="34" ry="26" fill="#FFB0A0" opacity="0.12"/>
+
+      <!-- ── Lips: flat cupid's bow ── -->
+      <!-- Lower lip base -->
+      <path d="M114,334 Q150,354 186,334 Q178,362 150,367 Q122,362 114,334Z" fill="#C55068"/>
+      <!-- Upper lip with cupid's bow -->
+      <path d="M114,334 Q130,321 140,328 Q145,323 150,325 Q155,323 160,328 Q170,321 186,334 Q178,327 150,319 Q122,327 114,334Z" fill="#DC6A7C"/>
+      <!-- Center line -->
+      <path d="M120,334 Q150,340 180,334" stroke="#A83F55" stroke-width="0.8" fill="none" opacity="0.7"/>
+      <!-- Highlight -->
+      <path d="M136,327 Q150,322 164,327" stroke="white" stroke-width="1.2" fill="none" opacity="0.22"/>
+
+      <!-- ── Zone label pills ── -->
+      <g style="pointer-events:none">
+        <rect x="112" y="157" width="76" height="20" rx="10" fill="white" fill-opacity="0.85"/>
+        <text x="150" y="171" text-anchor="middle" font-size="10" fill="#A05840" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">肌・ファンデ</text>
+
+        <rect x="70" y="195" width="30" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
+        <text x="85" y="207" text-anchor="middle" font-size="9" fill="#5050A0" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">眉</text>
+        <rect x="200" y="195" width="30" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
+        <text x="215" y="207" text-anchor="middle" font-size="9" fill="#5050A0" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">眉</text>
+
+        <rect x="76" y="246" width="28" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
+        <text x="90" y="258" text-anchor="middle" font-size="9" fill="#6050A8" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">目</text>
+        <rect x="196" y="246" width="28" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
+        <text x="210" y="258" text-anchor="middle" font-size="9" fill="#6050A8" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">目</text>
+
+        <rect x="30" y="282" width="42" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
+        <text x="51" y="294" text-anchor="middle" font-size="9" fill="#B04858" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">チーク</text>
+        <rect x="228" y="282" width="42" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
+        <text x="249" y="294" text-anchor="middle" font-size="9" fill="#B04858" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">チーク</text>
+
+        <rect x="120" y="370" width="60" height="20" rx="10" fill="white" fill-opacity="0.85"/>
+        <text x="150" y="384" text-anchor="middle" font-size="10" fill="#B03050" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">リップ</text>
+      </g>
+
+      <!-- ── Clickable zones (transparent, topmost) ── -->
+      <ellipse class="zone" data-zone="skin"    cx="150" cy="174" rx="96"  ry="67"  fill="transparent"/>
+      <path    class="zone" data-zone="eyebrow" d="M72,202 Q106,186 140,198" stroke="transparent" stroke-width="26" fill="none"/>
+      <path    class="zone" data-zone="eyebrow" d="M160,198 Q194,186 228,202" stroke="transparent" stroke-width="26" fill="none"/>
+      <ellipse class="zone" data-zone="eye"     cx="104" cy="226" rx="38"  ry="24"  fill="transparent"/>
+      <ellipse class="zone" data-zone="eye"     cx="196" cy="226" rx="38"  ry="24"  fill="transparent"/>
+      <ellipse class="zone" data-zone="cheek"   cx="66"  cy="276" rx="49"  ry="40"  fill="transparent"/>
+      <ellipse class="zone" data-zone="cheek"   cx="234" cy="276" rx="49"  ry="40"  fill="transparent"/>
+      <ellipse class="zone" data-zone="lip"     cx="150" cy="336" rx="53"  ry="29"  fill="transparent"/>
+    </svg>
+
+    <!-- Budget filter -->
+    <div class="budget-wrap">
+      <div class="filter-label">予算</div>
+      <div class="chip-row">
+        <button class="chip active" data-budget="all">すべて</button>
+        <button class="chip" data-budget="low">〜¥1,000</button>
+        <button class="chip" data-budget="mid">¥1,000〜¥3,000</button>
+        <button class="chip" data-budget="high">¥3,000〜</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: Products panel ── -->
+  <div class="products-panel">
+    <div class="panel-head">
+      <h2 id="panel-title">パーツを選んでください</h2>
+      <span id="zone-badge" class="zone-badge" style="display:none"></span>
+    </div>
+    <div id="zone-filters" class="zone-filters" style="display:none"></div>
+    <div class="products-grid" id="products-grid">
+      <div class="empty-state">
+        <div class="e-icon">👆</div>
+        <p>左のマネキンの顔パーツをクリックして<br>おすすめのコスメを探してみよう</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Product database ──────────────────────────────────────────
+// アフィリエイトIDの設定方法:
+//   Amazon: tag=YOUR-AFFILIATE-ID  (Amazonアソシエイトで取得)
+//   楽天: YOUR-RAKUTEN-ID          (楽天アフィリエイトで取得)
+// ─────────────────────────────────────────────────────────────
+
+const AFFILIATE = { amazon: 'YOUR-ID-22', rakuten: '' };
+
+function amz(kw) {
+  return `https://www.amazon.co.jp/s?k=${encodeURIComponent(kw)}&tag=${AFFILIATE.amazon}`;
+}
+function rak(kw) {
+  return `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(kw)}/`;
+}
+
+const DB = {
+  lip: [
+    { id:'l1', brand:'CANMAKE', name:'ステイオンバームルージュ',
+      desc:'うるうるバーム処方でスルスルのび、一日中落ちにくい発色',
+      price:748, finish:['グロス','ティント'], colors:['ピンク','レッド','コーラル','ヌード'],
+      look:['natural','casual'], bg:'#D87090', icon:'💋',
+      amazon:amz('CANMAKE ステイオンバームルージュ'), rakuten:rak('CANMAKE ステイオンバームルージュ') },
+
+    { id:'l2', brand:'CEZANNE', name:'ウォータリーティントリップ',
+      desc:'水分密着成分で唇にじわっとティント。ふんわり染まる',
+      price:528, finish:['ティント','シアー'], colors:['ピンク','ローズ','コーラル'],
+      look:['natural','office'], bg:'#C06080', icon:'💋',
+      amazon:amz('CEZANNE ウォータリーティントリップ'), rakuten:rak('CEZANNE ウォータリーティントリップ') },
+
+    { id:'l3', brand:'KATE', name:'リップモンスター',
+      desc:'まるで素唇のように密着。12時間持続の高発色リップ',
+      price:1430, finish:['マット','セミマット'], colors:['レッド','バーガンディ','テラコッタ','ブラウン'],
+      look:['trendy','gorgeous','office'], bg:'#902040', icon:'💋',
+      amazon:amz('KATE リップモンスター'), rakuten:rak('KATE リップモンスター') },
+
+    { id:'l4', brand:'excel', name:'グレイズバームリップ',
+      desc:'美容液成分豊富なバーム。艶感と保湿を同時に叶える',
+      price:1650, finish:['グロス','シアー'], colors:['ヌード','ピンク','コーラル'],
+      look:['natural','office'], bg:'#C88068', icon:'💋',
+      amazon:amz('excel グレイズバームリップ'), rakuten:rak('excel グレイズバームリップ') },
+
+    { id:'l5', brand:'MAJOLICA MAJORCA', name:'ルージュマジック',
+      desc:'うるうるガラス玉リップ。透明感とツヤ感が際立つ',
+      price:1430, finish:['グロス'], colors:['レッド','ピンク','コーラル','パープル'],
+      look:['gorgeous','trendy'], bg:'#C03055', icon:'💋',
+      amazon:amz('マジョリカマジョルカ ルージュマジック'), rakuten:rak('マジョリカマジョルカ ルージュマジック') },
+
+    { id:'l6', brand:'Shiseido', name:'マキアージュ ドラマティックルージュ',
+      desc:'リキッドからパウダーに変化。密着感と発色のバランスが秀逸',
+      price:2530, finish:['マット','セミマット'], colors:['レッド','ピンク','コーラル','バーガンディ'],
+      look:['gorgeous','office'], bg:'#802030', icon:'💋',
+      amazon:amz('マキアージュ ドラマティックルージュ'), rakuten:rak('マキアージュ ドラマティックルージュ') },
+
+    { id:'l7', brand:'RMK', name:'ラディアントリップカラー',
+      desc:'上品な艶と発色。保湿成分配合で唇をケアしながら彩る',
+      price:3300, finish:['グロス','シアー'], colors:['ピンク','ローズ','レッド','ヌード'],
+      look:['gorgeous','office'], bg:'#C05070', icon:'💋',
+      amazon:amz('RMK ラディアントリップカラー'), rakuten:rak('RMK リップカラー') },
+
+    { id:'l8', brand:'Visée', name:'ラスティングリップカラー',
+      desc:'カラーが唇に密着。時間がたっても崩れない仕上がり',
+      price:880, finish:['マット','ティント'], colors:['ブラウン','テラコッタ','レッド'],
+      look:['trendy','casual'], bg:'#985040', icon:'💋',
+      amazon:amz('Visee ラスティングリップカラー'), rakuten:rak('ヴィセ リップカラー') },
+  ],
+
+  eye: [
+    { id:'e1', brand:'CANMAKE', name:'パーフェクトスタイリストアイズ',
+      desc:'5色パレットで立体的な目元を演出。初心者でも失敗しにくい',
+      price:748, finish:['シマー','マット'], colors:['ブラウン','ピンク','パープル'],
+      look:['natural','casual'], bg:'#A07050', icon:'👁',
+      amazon:amz('CANMAKE パーフェクトスタイリストアイズ'), rakuten:rak('CANMAKE パーフェクトスタイリストアイズ') },
+
+    { id:'e2', brand:'CEZANNE', name:'トーンアップアイシャドウ',
+      desc:'肌なじみのよい絶妙カラーで自然な奥行きを演出',
+      price:528, finish:['シマー','シアー'], colors:['ベージュ','ブラウン','ピンクベージュ'],
+      look:['natural','office'], bg:'#C0A080', icon:'👁',
+      amazon:amz('CEZANNE トーンアップアイシャドウ'), rakuten:rak('CEZANNE トーンアップアイシャドウ') },
+
+    { id:'e3', brand:'excel', name:'スキニーリッチシャドウ',
+      desc:'4色が程よく混ざり合い深みのある立体的な目元に',
+      price:1650, finish:['シマー','マット','グリッター'], colors:['ブラウン','ピンク','スモーキー'],
+      look:['natural','office','trendy'], bg:'#806040', icon:'👁',
+      amazon:amz('excel スキニーリッチシャドウ'), rakuten:rak('excel スキニーリッチシャドウ') },
+
+    { id:'e4', brand:'KATE', name:'ザアイカラー',
+      desc:'単色高発色アイシャドウ。重ねづけで多彩な表情が生まれる',
+      price:1320, finish:['グリッター','シマー','マット'], colors:['ゴールド','シルバー','パープル','レッド'],
+      look:['gorgeous','trendy'], bg:'#504890', icon:'👁',
+      amazon:amz('KATE ザアイカラー'), rakuten:rak('KATE ザアイカラー') },
+
+    { id:'e5', brand:'ADDICTION', name:'ザ アイシャドウ',
+      desc:'繊細なパールが目元を上品に演出。重ねるほど深みが増す',
+      price:2750, finish:['シマー','パール','マット'], colors:['ベージュ','ブラウン','ローズ'],
+      look:['gorgeous','office'], bg:'#806078', icon:'👁',
+      amazon:amz('ADDICTION ザ アイシャドウ'), rakuten:rak('アディクション アイシャドウ') },
+
+    { id:'e6', brand:'MAJOLICA MAJORCA', name:'シャドーカスタマイズ',
+      desc:'ラメ・マット・パール全入りでドラマチックな目元に仕上がる',
+      price:715, finish:['グリッター','ラメ','マット'], colors:['ピンク','ゴールド','パープル'],
+      look:['gorgeous','trendy'], bg:'#9060A8', icon:'👁',
+      amazon:amz('マジョリカマジョルカ シャドーカスタマイズ'), rakuten:rak('マジョリカマジョルカ シャドーカスタマイズ') },
+
+    { id:'e7', brand:'Visée AVANT', name:'アイパレット',
+      desc:'洗練されたカラーバランスで彫り深い目元を演出',
+      price:1760, finish:['シマー','マット','パール'], colors:['ブラウン','グレー','ピンク'],
+      look:['office','trendy'], bg:'#687080', icon:'👁',
+      amazon:amz('Visee AVANT アイパレット'), rakuten:rak('ヴィセアヴァン アイパレット') },
+  ],
+
+  skin: [
+    { id:'s1', brand:'CANMAKE', name:'マシュマロフィニッシュパウダー',
+      desc:'ふわふわのマット仕上がり。毛穴・テカリをしっかりカバー',
+      price:880, finish:['マット','パウダー'], colors:['オークル','ベージュ','ピンク'],
+      look:['natural','casual','office'], bg:'#C8A878', icon:'✨',
+      amazon:amz('CANMAKE マシュマロフィニッシュパウダー'), rakuten:rak('CANMAKE マシュマロフィニッシュパウダー') },
+
+    { id:'s2', brand:'CEZANNE', name:'UVウルトラフィットベース',
+      desc:'SPF50+ PA++++。軽い使用感で崩れをしっかり防ぐ下地',
+      price:748, finish:['セミマット'], colors:['ピンクベージュ','ナチュラルベージュ'],
+      look:['natural','casual','office'], bg:'#B89868', icon:'✨',
+      amazon:amz('CEZANNE UVウルトラフィットベース'), rakuten:rak('CEZANNE UVウルトラフィットベース') },
+
+    { id:'s3', brand:'excel', name:'スキンケアUV',
+      desc:'スキンケア成分補給しながら紫外線カット。化粧崩れも防ぐ',
+      price:1980, finish:['ツヤ','セミマット'], colors:['ナチュラル'],
+      look:['natural','office'], bg:'#D8B888', icon:'✨',
+      amazon:amz('excel スキンケアUV'), rakuten:rak('excel スキンケアUV') },
+
+    { id:'s4', brand:'Shiseido', name:'インテグレート グレイシィ',
+      desc:'ファンデ・日焼け止め・スキンケア一体型。素肌感ある仕上がり',
+      price:1760, finish:['ツヤ','セミマット'], colors:['オークル','ベージュ','ピンクオークル'],
+      look:['natural','office'], bg:'#B89070', icon:'✨',
+      amazon:amz('インテグレート グレイシィ ファンデ'), rakuten:rak('インテグレート グレイシィ ファンデーション') },
+
+    { id:'s5', brand:'NARS', name:'ナチュラルラディアント ファンデ',
+      desc:'素肌のような自然な輝き。24時間持続処方で崩れにくい',
+      price:7150, finish:['ツヤ','ナチュラル'], colors:['全30色展開'],
+      look:['gorgeous','office'], bg:'#9C8060', icon:'✨',
+      amazon:amz('NARS ナチュラルラディアント ファンデーション'), rakuten:rak('NARS ナチュラルラディアント') },
+
+    { id:'s6', brand:'SUQQU', name:'イクイップト フルイド ファンデ',
+      desc:'肌本来の美しさを引き出すスキンケアベース。まるで素肌感',
+      price:8800, finish:['ツヤ','セミマット'], colors:['全20色展開'],
+      look:['gorgeous'], bg:'#887050', icon:'✨',
+      amazon:amz('SUQQU イクイップト フルイド ファンデーション'), rakuten:rak('SUQQU ファンデーション') },
+
+    { id:'s7', brand:'Bioré', name:'UV アクアリッチ ウォータリーエッセンス',
+      desc:'SPF50+ PA++++。みずみずしくさらっとした日焼け止めの定番',
+      price:880, finish:['さらさら'], colors:['無色'],
+      look:['natural','casual'], bg:'#88B8D8', icon:'☀️',
+      amazon:amz('Biore UV アクアリッチ ウォータリーエッセンス'), rakuten:rak('ビオレ UV アクアリッチ') },
+
+    { id:'s8', brand:'Anessa', name:'パーフェクトUV スキンケアミルク',
+      desc:'汗・水・こすれに強い高UVカット。スキンケア成分で肌も守る',
+      price:2530, finish:['ミルク'], colors:['無色'],
+      look:['casual','natural'], bg:'#D8B840', icon:'☀️',
+      amazon:amz('Anessa パーフェクトUV スキンケアミルク'), rakuten:rak('アネッサ パーフェクトUV') },
+  ],
+
+  cheek: [
+    { id:'c1', brand:'CANMAKE', name:'クリームチーク',
+      desc:'クリームタイプで肌に密着。ふんわり自然な血色感に',
+      price:748, finish:['クリーム'], colors:['ピンク','オレンジ','コーラル','レッド'],
+      look:['natural','casual'], bg:'#F0A0A8', icon:'🌸',
+      amazon:amz('CANMAKE クリームチーク'), rakuten:rak('CANMAKE クリームチーク') },
+
+    { id:'c2', brand:'CEZANNE', name:'チークブラッシュ',
+      desc:'ふんわり発色するパウダーチーク。自然な血色感を演出',
+      price:528, finish:['パウダー'], colors:['ピンク','コーラル','オレンジ','テラコッタ'],
+      look:['natural','casual','office'], bg:'#D8A888', icon:'🌸',
+      amazon:amz('CEZANNE チークブラッシュ'), rakuten:rak('CEZANNE チークブラッシュ') },
+
+    { id:'c3', brand:'NARS', name:'ブラッシュ',
+      desc:'一日中続く発色のよいパウダーチーク。多彩なカラー展開',
+      price:4180, finish:['パウダー','シマー'], colors:['ピンク','コーラル','ローズ','ピーチ'],
+      look:['gorgeous','trendy'], bg:'#D05878', icon:'🌸',
+      amazon:amz('NARS ブラッシュ'), rakuten:rak('NARS ブラッシュ') },
+
+    { id:'c4', brand:'RMK', name:'インジーニアス パウダーチークス N',
+      desc:'上品な血色感を与えるパウダーチーク。透明感ある仕上がり',
+      price:3080, finish:['パウダー','シマー'], colors:['ピンク','コーラル','ベージュ'],
+      look:['gorgeous','office'], bg:'#C07888', icon:'🌸',
+      amazon:amz('RMK インジーニアス パウダーチークス'), rakuten:rak('RMK パウダーチークス') },
+
+    { id:'c5', brand:'Shiseido', name:'インテグレート チーク＆ハイライター',
+      desc:'チークとハイライトが一体化。立体感ある顔立ちに仕上がる',
+      price:1650, finish:['パウダー','ハイライト'], colors:['ピンク','オレンジ'],
+      look:['natural','trendy'], bg:'#E0B0A0', icon:'🌸',
+      amazon:amz('インテグレート チーク ハイライター'), rakuten:rak('インテグレート チーク') },
+  ],
+
+  eyebrow: [
+    { id:'b1', brand:'CEZANNE', name:'パウダーアイブロウ',
+      desc:'3色パレットで自然な立体感のある眉に。初心者でも使いやすい',
+      price:528, finish:['パウダー'], colors:['ブラウン','グレー','アッシュ'],
+      look:['natural','casual','office'], bg:'#806040', icon:'🖊',
+      amazon:amz('CEZANNE パウダーアイブロウ'), rakuten:rak('CEZANNE パウダーアイブロウ') },
+
+    { id:'b2', brand:'excel', name:'パウダー&ペンシルアイブロウEX',
+      desc:'パウダーとペンシルを組み合わせて思い通りの眉を実現',
+      price:1320, finish:['パウダー','ペンシル'], colors:['ブラウン','アッシュ','ライトブラウン'],
+      look:['natural','office','trendy'], bg:'#604020', icon:'🖊',
+      amazon:amz('excel パウダーペンシルアイブロウ'), rakuten:rak('excel アイブロウ') },
+
+    { id:'b3', brand:'KATE', name:'デザイニングアイブロウ3D',
+      desc:'3Dアイブロウで立体的でリアルな毛並みを再現',
+      price:1430, finish:['パウダー','ペンシル'], colors:['ブラウン','アッシュ','グレー'],
+      look:['trendy','gorgeous'], bg:'#503020', icon:'🖊',
+      amazon:amz('KATE デザイニングアイブロウ3D'), rakuten:rak('KATE デザイニングアイブロウ') },
+
+    { id:'b4', brand:'CANMAKE', name:'パウダーアイブロウ',
+      desc:'やわらかなパウダーで自然な眉に。にじみにくい処方',
+      price:550, finish:['パウダー'], colors:['ナチュラルブラウン','グレーブラウン'],
+      look:['natural','casual'], bg:'#987050', icon:'🖊',
+      amazon:amz('CANMAKE パウダーアイブロウ'), rakuten:rak('CANMAKE パウダーアイブロウ') },
+  ],
+};
+
+// ── Zone config ──────────────────────────────────────────────
+const ZONES = {
+  skin:    { label:'肌・ファンデ', icon:'✨', overlays:['ov-skin'],
+             finishes:['ツヤ','セミマット','マット','パウダー','さらさら','ミルク'] },
+  eye:     { label:'目元',         icon:'👁', overlays:['ov-eye-l','ov-eye-r'],
+             finishes:['シマー','マット','グリッター','パール','ラメ','シアー'] },
+  eyebrow: { label:'眉',           icon:'🖊', overlays:['ov-brow-l','ov-brow-r'],
+             finishes:['パウダー','ペンシル'] },
+  cheek:   { label:'チーク',       icon:'🌸', overlays:['ov-cheek-l','ov-cheek-r'],
+             finishes:['パウダー','クリーム','シマー','ハイライト'] },
+  lip:     { label:'リップ',       icon:'💄', overlays:['ov-lip'],
+             finishes:['グロス','マット','セミマット','ティント','シアー'] },
+};
+
+const BUDGET_RANGES = { low:[0,1000], mid:[1000,3000], high:[3000,Infinity], all:[0,Infinity] };
+
+// ── State ────────────────────────────────────────────────────
+const S = { zone:null, look:'all', budget:'all', finish:null };
+
+// ── Helpers ──────────────────────────────────────────────────
+function adjColor(hex, n) {
+  const v = parseInt(hex.slice(1),16);
+  const r = Math.max(0,Math.min(255,(v>>16)+n));
+  const g = Math.max(0,Math.min(255,((v>>8)&0xFF)+n));
+  const b = Math.max(0,Math.min(255,(v&0xFF)+n));
+  return '#'+((r<<16)|(g<<8)|b).toString(16).padStart(6,'0');
+}
+
+const OV_REST = 0.07, OV_HOVER = 0.18, OV_ACTIVE = 0.36;
+
+function setOverlays(hoverZone = null) {
+  Object.entries(ZONES).forEach(([z, zc]) => {
+    const op = z === S.zone ? OV_ACTIVE : z === hoverZone ? OV_HOVER : OV_REST;
+    zc.overlays.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute('opacity', String(op));
+    });
+  });
+}
+
+// ── Render ───────────────────────────────────────────────────
+function renderAll() {
+  // Header
+  const title = document.getElementById('panel-title');
+  const badge = document.getElementById('zone-badge');
+  const filtersEl = document.getElementById('zone-filters');
+
+  setOverlays();
+
+  if (!S.zone) {
+    title.textContent = 'パーツを選んでください';
+    badge.style.display = 'none';
+    filtersEl.style.display = 'none';
+    renderProducts([]);
+    return;
+  }
+
+  const zc = ZONES[S.zone];
+  title.textContent = `${zc.icon} ${zc.label}のコスメ`;
+  badge.style.display = 'inline-flex';
+
+  // Finish filters
+  filtersEl.style.display = 'flex';
+  filtersEl.innerHTML = `
+    <div>
+      <div class="filter-label">仕上がり</div>
+      <div class="chip-row">
+        <button class="chip ${!S.finish?'active':''}" data-finish="">すべて</button>
+        ${zc.finishes.map(f=>`<button class="chip ${S.finish===f?'active':''}" data-finish="${f}">${f}</button>`).join('')}
+      </div>
+    </div>`;
+  filtersEl.querySelectorAll('[data-finish]').forEach(btn => {
+    btn.addEventListener('click', () => { S.finish = btn.dataset.finish||null; renderAll(); });
+  });
+
+  // Filter products
+  const [bMin, bMax] = BUDGET_RANGES[S.budget];
+  let items = (DB[S.zone]||[]).filter(p => {
+    if (S.look !== 'all' && !p.look.includes(S.look)) return false;
+    if (p.price < bMin || p.price >= bMax) return false;
+    if (S.finish && !p.finish.includes(S.finish)) return false;
+    return true;
+  });
+
+  badge.textContent = items.length + '件';
+  renderProducts(items);
+}
+
+function renderProducts(items) {
+  const grid = document.getElementById('products-grid');
+  if (!S.zone) {
+    grid.innerHTML = `<div class="empty-state"><div class="e-icon">👆</div><p>左のマネキンの顔パーツをクリックして<br>おすすめのコスメを探してみよう</p></div>`;
+    return;
+  }
+  if (!items.length) {
+    grid.innerHTML = `<div class="empty-state"><div class="e-icon">🔍</div><p>条件に合う商品が見つかりませんでした<br>フィルターを変えてみてください</p></div>`;
+    return;
+  }
+  grid.innerHTML = items.map(p => `
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,${p.bg},${adjColor(p.bg,-30)})">
+        <div style="font-size:32px">${p.icon}</div>
+        <div class="brand-badge">${p.brand}</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">${p.brand}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-meta">
+          <div class="product-price">¥${p.price.toLocaleString()}</div>
+          <div class="tags">${p.finish.slice(0,2).map(f=>`<span class="tag">${f}</span>`).join('')}</div>
+        </div>
+        <div class="buy-btns">
+          <a class="buy-btn btn-amazon" href="${p.amazon}" target="_blank" rel="noopener noreferrer">Amazon</a>
+          <a class="buy-btn btn-rakuten" href="${p.rakuten}" target="_blank" rel="noopener noreferrer">楽天</a>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Events ───────────────────────────────────────────────────
+document.querySelectorAll('.zone').forEach(el => {
+  el.addEventListener('click', e => {
+    const z = e.currentTarget.dataset.zone;
+    S.zone   = S.zone === z ? null : z;
+    S.finish = null;
+    renderAll();
+  });
+  el.addEventListener('mouseenter', e => { setOverlays(e.currentTarget.dataset.zone); });
+  el.addEventListener('mouseleave', () => { setOverlays(); });
+});
+
+document.querySelectorAll('[data-look]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-look]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    S.look = btn.dataset.look;
+    renderAll();
+  });
+});
+
+document.querySelectorAll('[data-budget]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-budget]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    S.budget = btn.dataset.budget;
+    renderAll();
+  });
+});
+
+// ── URL parameter init ────────────────────────────────────────
+// Usage: ?zone=lip&look=natural&budget=low&finish=グロス
+(function initFromURL() {
+  const p = new URLSearchParams(window.location.search);
+  const zone   = p.get('zone');
+  const look   = p.get('look');
+  const budget = p.get('budget');
+  const finish = p.get('finish');
+
+  if (zone   && ZONES[zone])                                     S.zone   = zone;
+  if (look   && BUDGET_RANGES[look]   === undefined && ['all','natural','trendy','gorgeous','casual','office'].includes(look)) S.look = look;
+  if (budget && BUDGET_RANGES[budget] !== undefined)             S.budget = budget;
+  if (finish)                                                    S.finish = finish;
+
+  // Sync button UI
+  if (look) document.querySelectorAll('[data-look]').forEach(b => b.classList.toggle('active', b.dataset.look === (look||'all')));
+  if (budget) document.querySelectorAll('[data-budget]').forEach(b => b.classList.toggle('active', b.dataset.budget === (budget||'all')));
+
+  if (zone || look || budget || finish) renderAll();
+})();
+</script>
+</body>
+</html>
