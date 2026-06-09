@@ -1,10 +1,82 @@
 <nav class="site-nav">
   <div class="nav-inner">
-    <a class="site-name" href="/"><span>💄</span>コスメファインダー</a>
+    <a class="site-name" href="{{ "/" | relURL }}"><span>💄</span>CosméFinder</a>
     <div class="nav-links">
       {{ range .Site.Menus.main }}
       <a href="{{ .URL }}">{{ .Name }}</a>
       {{ end }}
     </div>
+    {{ if gt (len .Site.Languages) 1 }}
+    {{- $allTrans := .AllTranslations -}}
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false">
+        <span class="lang-globe">🌐</span>
+        <span>{{ .Language.LanguageName }}</span>
+        <span class="lang-arrow">▾</span>
+      </button>
+      <ul class="lang-dropdown" id="langDropdown" role="listbox">
+        {{ range $.Site.Languages }}
+        {{- $lang := .Lang -}}
+        {{- $name := .LanguageName -}}
+        {{- $href := "" -}}
+        {{- range $allTrans }}{{- if eq .Language.Lang $lang }}{{- $href = .Permalink -}}{{- end }}{{- end }}
+        {{- if not $href -}}
+          {{- if eq $lang "ja" }}{{- $href = "/" -}}
+          {{- else }}{{- $href = (printf "/%s/" $lang) -}}
+          {{- end -}}
+        {{- end }}
+        <li>
+          {{- if eq $lang $.Language.Lang -}}
+          <span class="lang-opt lang-opt-active">{{ $name }}<span class="lang-check">✓</span></span>
+          {{- else -}}
+          <a href="{{ $href }}" class="lang-opt" hreflang="{{ $lang }}">{{ $name }}</a>
+          {{- end -}}
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
   </div>
 </nav>
+<style>
+.lang-switcher { position:relative; margin-left:.6rem; flex-shrink:0; }
+.lang-btn {
+  display:flex; align-items:center; gap:.28rem;
+  background:none; border:1.5px solid #D4A0AC; border-radius:6px;
+  padding:.22rem .55rem; font-size:.73rem; font-weight:700; color:var(--brown);
+  cursor:pointer; font-family:inherit; transition:border-color .15s,color .15s;
+}
+.lang-btn:hover, .lang-btn[aria-expanded="true"] { border-color:var(--rose); color:var(--rose); }
+.lang-globe { font-size:.85rem; line-height:1; }
+.lang-arrow { font-size:.68rem; transition:transform .15s; display:inline-block; }
+.lang-btn[aria-expanded="true"] .lang-arrow { transform:rotate(180deg); }
+.lang-dropdown {
+  display:none; position:absolute; top:calc(100% + 5px); right:0;
+  background:#fff; border:1.5px solid #ECC8D0; border-radius:8px;
+  box-shadow:0 4px 18px rgba(160,80,80,.13); list-style:none; margin:0; padding:.3rem 0;
+  min-width:120px; z-index:9998;
+}
+.lang-dropdown.open { display:block; }
+.lang-opt {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.4rem .85rem; font-size:.78rem; font-weight:700;
+  color:var(--brown); text-decoration:none; white-space:nowrap; gap:.4rem;
+}
+a.lang-opt:hover { background:var(--rose-light); color:var(--rose); }
+.lang-opt-active { color:var(--rose); cursor:default; }
+.lang-check { font-size:.75rem; }
+</style>
+<script>
+(function(){
+  var sw  = document.getElementById('langSwitcher');
+  if (!sw) return;
+  var btn = document.getElementById('langBtn');
+  var dd  = document.getElementById('langDropdown');
+  function close(){ dd.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+  function open(){  dd.classList.add('open');    btn.setAttribute('aria-expanded','true');  }
+  btn.addEventListener('click', function(e){ e.stopPropagation(); dd.classList.contains('open') ? close() : open(); });
+  document.addEventListener('click', function(){ close(); });
+  dd.addEventListener('click',  function(e){ e.stopPropagation(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+})();
+</script>

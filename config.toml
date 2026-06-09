@@ -6,10 +6,54 @@ paginate      = 12
 [minify]
   disableJS = true
 
+defaultContentLanguage          = "en"
+defaultContentLanguageInSubdir  = false
+
+[languages]
+  [languages.ja]
+    languageName = "日本語"
+    languageCode = "ja"
+    weight       = 1
+    title        = "コスメファインダー｜顔パーツで選ぶ日本コスメ"
+    [languages.ja.params]
+      description = "顔のパーツをクリックするだけで、あなたにぴったりの日本コスメが見つかるツールと、プチプラからデパコスまで徹底比較するコスメ情報サイトです。"
+
+  [languages.en]
+    languageName = "English"
+    languageCode = "en"
+    weight       = 2
+    title        = "CosméFinder — Japanese Cosmetics Guide"
+    [languages.en.params]
+      description = "Discover the best Japanese cosmetics — from drugstore picks to department-store gems. Browse by face zone, look, and budget."
+
+  [languages.fr]
+    languageName = "Français"
+    languageCode = "fr"
+    weight       = 3
+    title        = "CosméFinder — Guide des Cosmétiques Japonais"
+    [languages.fr.params]
+      description = "Découvrez les meilleurs cosmétiques japonais — des produits abordables aux trésors des grands magasins. Filtrez par zone du visage, look et budget."
+
+  [languages.zh-cn]
+    languageName = "简体中文"
+    languageCode = "zh-cn"
+    weight       = 4
+    title        = "CosméFinder — 日本彩妆指南"
+    [languages.zh-cn.params]
+      description = "探索最佳日本彩妆产品——从平价药妆到百货精品，按部位、妆感和预算轻松筛选。"
+
+  [languages.ko]
+    languageName = "한국어"
+    languageCode = "ko"
+    weight       = 5
+    title        = "CosméFinder — 일본 코스메 가이드"
+    [languages.ko.params]
+      description = "드럭스토어 추천부터 백화점 명품까지, 일본 코스메의 모든 것. 부위·룩·가격대별로 쉽게 찾아보세요."
+
 [params]
   description  = "顔のパーツをクリックするだけで、あなたにぴったりの日本コスメが見つかるツールと、プチプラからデパコスまで徹底比較するコスメ情報サイトです。"
   author       = "コスメファインダー編集部"
-  amazonID     = "YOUR-AFFILIATE-ID"
+  amazonID     = "96nekozizi-22"
   rakutenID    = "YOUR-RAKUTEN-ID"
   twitterSite  = "@cosme_finder"
 
@@ -42,6 +86,106 @@ paginate      = 12
     name   = "プチプラ特集"
     url    = "/tags/プチプラ/"
     weight = 6
+
+[[languages.en.menus.main]]
+  name   = "Find Cosmetics"
+  url    = "/en/tool/"
+  weight = 1
+[[languages.en.menus.main]]
+  name   = "Lip"
+  url    = "/en/categories/lip/"
+  weight = 2
+[[languages.en.menus.main]]
+  name   = "Eye Makeup"
+  url    = "/en/categories/eye/"
+  weight = 3
+[[languages.en.menus.main]]
+  name   = "Foundation"
+  url    = "/en/categories/skin/"
+  weight = 4
+[[languages.en.menus.main]]
+  name   = "Blush"
+  url    = "/en/categories/cheek/"
+  weight = 5
+[[languages.en.menus.main]]
+  name   = "Budget Picks"
+  url    = "/en/tags/puchipura/"
+  weight = 6
+
+[[languages.fr.menus.main]]
+  name   = "Trouver des Cosmétiques"
+  url    = "/fr/tool/"
+  weight = 1
+[[languages.fr.menus.main]]
+  name   = "Lèvres"
+  url    = "/fr/categories/lip/"
+  weight = 2
+[[languages.fr.menus.main]]
+  name   = "Yeux"
+  url    = "/fr/categories/eye/"
+  weight = 3
+[[languages.fr.menus.main]]
+  name   = "Fond de Teint"
+  url    = "/fr/categories/skin/"
+  weight = 4
+[[languages.fr.menus.main]]
+  name   = "Blush"
+  url    = "/fr/categories/cheek/"
+  weight = 5
+[[languages.fr.menus.main]]
+  name   = "Petits Prix"
+  url    = "/fr/tags/puchipura/"
+  weight = 6
+
+[[languages.zh-cn.menus.main]]
+  name   = "寻找化妆品"
+  url    = "/zh-cn/tool/"
+  weight = 1
+[[languages.zh-cn.menus.main]]
+  name   = "唇妆"
+  url    = "/zh-cn/categories/lip/"
+  weight = 2
+[[languages.zh-cn.menus.main]]
+  name   = "眼妆"
+  url    = "/zh-cn/categories/eye/"
+  weight = 3
+[[languages.zh-cn.menus.main]]
+  name   = "粉底"
+  url    = "/zh-cn/categories/skin/"
+  weight = 4
+[[languages.zh-cn.menus.main]]
+  name   = "腮红"
+  url    = "/zh-cn/categories/cheek/"
+  weight = 5
+[[languages.zh-cn.menus.main]]
+  name   = "平价精选"
+  url    = "/zh-cn/tags/puchipura/"
+  weight = 6
+
+[[languages.ko.menus.main]]
+  name   = "코스메 찾기"
+  url    = "/ko/tool/"
+  weight = 1
+[[languages.ko.menus.main]]
+  name   = "립"
+  url    = "/ko/categories/lip/"
+  weight = 2
+[[languages.ko.menus.main]]
+  name   = "아이 메이크업"
+  url    = "/ko/categories/eye/"
+  weight = 3
+[[languages.ko.menus.main]]
+  name   = "파운데이션"
+  url    = "/ko/categories/skin/"
+  weight = 4
+[[languages.ko.menus.main]]
+  name   = "블러셔"
+  url    = "/ko/categories/cheek/"
+  weight = 5
+[[languages.ko.menus.main]]
+  name   = "저가 추천"
+  url    = "/ko/tags/puchipura/"
+  weight = 6
 
 [markup.goldmark.renderer]
   unsafe = true

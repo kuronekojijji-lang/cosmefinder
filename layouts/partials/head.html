@@ -8,6 +8,11 @@
 <meta property="og:url" content="{{ .Permalink }}">
 {{ if .Params.thumbnail }}<meta property="og:image" content="{{ .Params.thumbnail | absURL }}">{{ end }}
 <link rel="canonical" href="{{ .Permalink }}">
+{{ range .AllTranslations -}}
+<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+{{ end -}}
+{{- $jaPage := index (where .AllTranslations "Language.Lang" "ja") 0 -}}
+{{ with $jaPage }}<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">{{ end }}
 <style>
 :root{--rose:#D4849A;--rose-light:#FFF0EE;--rose-mid:#F5C8D0;--brown:#7A4F4A;--cream:#FDF8F5;--text:#3D2020;--text-light:#997070;--white:#fff;--shadow:0 2px 14px rgba(160,80,80,.10)}
 *{box-sizing:border-box;margin:0;padding:0}

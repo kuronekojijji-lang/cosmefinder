@@ -1,4 +1,4 @@
----
+﻿---
 title: "眉毛の整え方【初心者向け3ステップ】道具・手順・失敗対策を徹底解説"
 date: 2026-06-07
 description: "眉毛の整え方を初心者向けに3ステップで解説。ハサミ・毛抜き・カミソリの使い分け、左右がそろわないなどよくある失敗の対策、プロのコツまでわかりやすく紹介します。"
@@ -98,7 +98,7 @@ article_type: "howto"
     <div class="product-name">ヘビーローテーション カラーリングアイブロウ</div>
     <div class="product-price">¥880</div>
     <div class="buy-row">
-      <a class="btn btn-amz" href="https://www.amazon.co.jp/s?k=ヘビーローテーション+カラーリングアイブロウ&tag=YOUR-ID" target="_blank" rel="noopener">Amazon</a>
+      <a class="btn btn-amz" href="https://www.amazon.co.jp/s?k=ヘビーローテーション+カラーリングアイブロウ&tag=96nekozizi-22" target="_blank" rel="noopener">Amazon</a>
       <a class="btn btn-rak" href="https://search.rakuten.co.jp/search/mall/ヘビーローテーション+カラーリングアイブロウ/" target="_blank" rel="noopener">楽天</a>
     </div>
   </div>
@@ -119,7 +119,7 @@ article_type: "howto"
     <div class="product-name">パウダーアイブロウ</div>
     <div class="product-price">¥440</div>
     <div class="buy-row">
-      <a class="btn btn-amz" href="https://www.amazon.co.jp/s?k=セザンヌ+パウダーアイブロウ&tag=YOUR-ID" target="_blank" rel="noopener">Amazon</a>
+      <a class="btn btn-amz" href="https://www.amazon.co.jp/s?k=セザンヌ+パウダーアイブロウ&tag=96nekozizi-22" target="_blank" rel="noopener">Amazon</a>
       <a class="btn btn-rak" href="https://search.rakuten.co.jp/search/mall/セザンヌ+パウダーアイブロウ/" target="_blank" rel="noopener">楽天</a>
     </div>
   </div>
@@ -138,7 +138,7 @@ article_type: "howto"
     <div class="product-name">タトゥーブロウ インクトリオ</div>
     <div class="product-price">¥1,650</div>
     <div class="buy-row">
-      <a class="btn btn-amz" href="https://www.amazon.co.jp/s?k=メイベリン+タトゥーブロウ+インクトリオ&tag=YOUR-ID" target="_blank" rel="noopener">Amazon</a>
+      <a class="btn btn-amz" href="https://www.amazon.co.jp/s?k=メイベリン+タトゥーブロウ+インクトリオ&tag=96nekozizi-22" target="_blank" rel="noopener">Amazon</a>
       <a class="btn btn-rak" href="https://search.rakuten.co.jp/search/mall/メイベリン+タトゥーブロウ+インクトリオ/" target="_blank" rel="noopener">楽天</a>
     </div>
   </div>

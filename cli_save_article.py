@@ -56,7 +56,7 @@ article_type: "{args.article_type}"
 """
 
     slug = args.slug or slugify(args.title)
-    filename = f"{today}-{slug}.md"
+    filename = f"{today}-{slug}.ja.md"
     filepath = os.path.join(CONTENT_DIR, filename)
 
     os.makedirs(CONTENT_DIR, exist_ok=True)

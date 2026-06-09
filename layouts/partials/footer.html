@@ -1,11 +1,39 @@
 <footer>
   <p>
+    {{- if eq .Language.Lang "en" -}}
+    <a href="/en/about/">About</a> |
+    <a href="/en/privacy/">Privacy Policy</a> |
+    <a href="/en/disclosure/">Affiliate Disclosure</a>
+    {{- else if eq .Language.Lang "fr" -}}
+    <a href="/fr/about/">À Propos</a> |
+    <a href="/fr/privacy/">Politique de Confidentialité</a> |
+    <a href="/fr/disclosure/">Mentions Affiliées</a>
+    {{- else if eq .Language.Lang "zh-cn" -}}
+    <a href="/zh-cn/about/">关于我们</a> |
+    <a href="/zh-cn/privacy/">隐私政策</a> |
+    <a href="/zh-cn/disclosure/">联盟声明</a>
+    {{- else if eq .Language.Lang "ko" -}}
+    <a href="/ko/about/">소개</a> |
+    <a href="/ko/privacy/">개인정보처리방침</a> |
+    <a href="/ko/disclosure/">제휴 공개</a>
+    {{- else -}}
     <a href="/about/">このサイトについて</a> ｜
     <a href="/privacy/">プライバシーポリシー</a> ｜
     <a href="/disclosure/">アフィリエイト開示</a>
+    {{- end }}
   </p>
   <p style="margin-top:8px">
+    {{- if eq .Language.Lang "en" -}}
+    This site participates in the Amazon Associates and Rakuten Affiliate programs.
+    {{- else if eq .Language.Lang "fr" -}}
+    Ce site participe aux programmes d'affiliation Amazon et Rakuten.
+    {{- else if eq .Language.Lang "zh-cn" -}}
+    本站参与亚马逊联盟及乐天联盟计划。
+    {{- else if eq .Language.Lang "ko" -}}
+    이 사이트는 아마존 어소시에이트 및 라쿠텐 제휴 프로그램에 참여하고 있습니다.
+    {{- else -}}
     当サイトはAmazon.co.jpアソシエイト、楽天アフィリエイトのプログラムに参加しています。
+    {{- end }}
   </p>
-  <p style="margin-top:6px">© {{ now.Year }} コスメファインダー</p>
+  <p style="margin-top:6px">© {{ now.Year }} CosméFinder</p>
 </footer>
