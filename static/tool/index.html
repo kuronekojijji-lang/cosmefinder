@@ -30,8 +30,19 @@ header p{font-size:12px;color:var(--text-light);margin-top:1px}
 .face-panel{background:var(--white);border-right:1px solid #F0DDD9;display:flex;flex-direction:column;align-items:center;padding:20px 14px;overflow-y:auto}
 .face-hint{font-size:12px;color:var(--text-light);margin-bottom:14px;text-align:center;line-height:1.6}
 .face-hint strong{display:block;color:var(--rose);font-size:13px;margin-bottom:2px}
-/* ── SVG face ── */
-.mannequin-face .zone{cursor:pointer}
+/* ── Image face container ── */
+.face-container{position:relative;width:270px;height:313px;overflow:hidden;margin:0 auto}
+.manekin-img{width:540px;max-width:none;height:auto;display:block;pointer-events:none;user-select:none}
+.zone-overlay{position:absolute;border-radius:50%;transition:background .22s;cursor:pointer}
+#ov-skin    {top:12%;left:18%;width:64%;height:32%;background:rgba(255,128,80,0.05)}
+#ov-brow-l  {top:32%;left:14%;width:30%;height:10%;background:rgba(80,80,200,0.05);border-radius:30px}
+#ov-brow-r  {top:32%;left:56%;width:30%;height:10%;background:rgba(80,80,200,0.05);border-radius:30px}
+#ov-eye-l   {top:40%;left:12%;width:34%;height:14%;background:rgba(128,96,232,0.05)}
+#ov-eye-r   {top:40%;left:54%;width:34%;height:14%;background:rgba(128,96,232,0.05)}
+#ov-cheek-l {top:52%;left:1%; width:24%;height:20%;background:rgba(255,80,112,0.05)}
+#ov-cheek-r {top:52%;left:75%;width:24%;height:20%;background:rgba(255,80,112,0.05)}
+#ov-lip     {top:63%;left:28%;width:44%;height:16%;background:rgba(255,32,80,0.05)}
+.zone-label-pill{position:absolute;background:rgba(255,255,255,0.88);color:#A05840;font-size:9px;font-weight:700;padding:2px 7px;border-radius:8px;pointer-events:none;white-space:nowrap;transform:translateX(-50%)}
 /* ── Budget filter ── */
 .budget-wrap{width:100%;margin-top:18px;padding-top:14px;border-top:1px solid #F0DDD9}
 .filter-label{font-size:11px;color:var(--text-light);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
@@ -106,121 +117,27 @@ header p{font-size:12px;color:var(--text-light);margin-top:1px}
       気になる部位を選ぶとコスメが表示されます
     </div>
 
-    <svg id="face-svg" class="mannequin-face" viewBox="0 0 300 450" xmlns="http://www.w3.org/2000/svg" width="270" height="405" style="max-width:100%">
-      <defs>
-        <filter id="fshadow" x="-12%" y="-6%" width="124%" height="118%">
-          <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#B08060" flood-opacity="0.18"/>
-        </filter>
-      </defs>
-
-      <!-- ── Hair: flat bob ── -->
-      <ellipse cx="150" cy="72" rx="126" ry="82" fill="#1A0906"/>
-      <rect x="24" y="72" width="252" height="64" fill="#1A0906"/>
-      <!-- Bob side strands -->
-      <rect x="24" y="128" width="32" height="112" rx="16" fill="#1A0906"/>
-      <rect x="244" y="128" width="32" height="112" rx="16" fill="#1A0906"/>
-      <!-- Hair surface sheen (flat design) -->
-      <ellipse cx="118" cy="58" rx="62" ry="28" fill="#2C1008" opacity="0.7"/>
-
-      <!-- ── Neck ── -->
-      <rect x="118" y="392" width="64" height="58" rx="8" fill="#F5DBC6"/>
-
-      <!-- ── Face oval ── -->
-      <ellipse cx="150" cy="252" rx="118" ry="156" fill="#F5DBC6" filter="url(#fshadow)"/>
-
-      <!-- ── Ears ── -->
-      <ellipse cx="32" cy="248" rx="16" ry="24" fill="#ECCDB8"/>
-      <ellipse cx="32" cy="248" rx="10" ry="15" fill="none" stroke="#D8B09A" stroke-width="1.5"/>
-      <ellipse cx="268" cy="248" rx="16" ry="24" fill="#ECCDB8"/>
-      <ellipse cx="268" cy="248" rx="10" ry="15" fill="none" stroke="#D8B09A" stroke-width="1.5"/>
-
-      <!-- ── Zone overlays: always-on subtle tint, JS drives opacity ── -->
-      <ellipse id="ov-skin"    cx="150" cy="174" rx="96"  ry="67"  fill="#FF8050" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
-      <ellipse id="ov-eye-l"  cx="104" cy="226" rx="38"  ry="23"  fill="#8060E8" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
-      <ellipse id="ov-eye-r"  cx="196" cy="226" rx="38"  ry="23"  fill="#8060E8" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
-      <path id="ov-brow-l" d="M72,202 Q106,186 140,198" stroke="#5050C8" stroke-width="24" fill="none" opacity="0.07" stroke-linecap="round" style="pointer-events:none;transition:opacity .22s"/>
-      <path id="ov-brow-r" d="M160,198 Q194,186 228,202" stroke="#5050C8" stroke-width="24" fill="none" opacity="0.07" stroke-linecap="round" style="pointer-events:none;transition:opacity .22s"/>
-      <ellipse id="ov-cheek-l" cx="66"  cy="276" rx="47"  ry="38"  fill="#FF5070" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
-      <ellipse id="ov-cheek-r" cx="234" cy="276" rx="47"  ry="38"  fill="#FF5070" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
-      <ellipse id="ov-lip"    cx="150" cy="338" rx="53"  ry="28"  fill="#FF2050" opacity="0.07" style="pointer-events:none;transition:opacity .22s"/>
-
-      <!-- ── Eyebrows: clean flat arcs ── -->
-      <path d="M76,206 Q106,191 136,202" stroke="#1A0906" stroke-width="5.5" fill="none" stroke-linecap="round"/>
-      <path d="M164,202 Q194,191 224,206" stroke="#1A0906" stroke-width="5.5" fill="none" stroke-linecap="round"/>
-
-      <!-- ── Left eye ── -->
-      <path d="M76,228 Q104,210 132,228 Q104,246 76,228Z" fill="#F8F2E8"/>
-      <circle cx="104" cy="228" r="13" fill="#3A1E0C"/>
-      <circle cx="104" cy="228" r="7.5" fill="#080302"/>
-      <circle cx="100" cy="223" r="2.8" fill="white"/>
-      <circle cx="107" cy="232" r="1.5" fill="white" opacity="0.5"/>
-      <path d="M77,221 Q90,214 104,217" stroke="#080302" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M104,217 Q118,214 131,221" stroke="#080302" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M80,234 Q104,242 128,234" stroke="#3A1E0C" stroke-width="1" fill="none" opacity="0.4"/>
-
-      <!-- ── Right eye ── -->
-      <path d="M168,228 Q196,210 224,228 Q196,246 168,228Z" fill="#F8F2E8"/>
-      <circle cx="196" cy="228" r="13" fill="#3A1E0C"/>
-      <circle cx="196" cy="228" r="7.5" fill="#080302"/>
-      <circle cx="192" cy="223" r="2.8" fill="white"/>
-      <circle cx="199" cy="232" r="1.5" fill="white" opacity="0.5"/>
-      <path d="M169,221 Q182,214 196,217" stroke="#080302" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M196,217 Q210,214 223,221" stroke="#080302" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M172,234 Q196,242 220,234" stroke="#3A1E0C" stroke-width="1" fill="none" opacity="0.4"/>
-
-      <!-- ── Nose: minimal flat ── -->
-      <path d="M146,258 Q140,280 146,291 Q150,296 154,291 Q160,280 154,258" stroke="#CFA890" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <ellipse cx="145" cy="290" rx="6" ry="4" fill="#C89878" opacity="0.32"/>
-      <ellipse cx="155" cy="290" rx="6" ry="4" fill="#C89878" opacity="0.32"/>
-
-      <!-- ── Cheek blush (decorative) ── -->
-      <ellipse cx="68"  cy="276" rx="34" ry="26" fill="#FFB0A0" opacity="0.12"/>
-      <ellipse cx="232" cy="276" rx="34" ry="26" fill="#FFB0A0" opacity="0.12"/>
-
-      <!-- ── Lips: flat cupid's bow ── -->
-      <!-- Lower lip base -->
-      <path d="M114,334 Q150,354 186,334 Q178,362 150,367 Q122,362 114,334Z" fill="#C55068"/>
-      <!-- Upper lip with cupid's bow -->
-      <path d="M114,334 Q130,321 140,328 Q145,323 150,325 Q155,323 160,328 Q170,321 186,334 Q178,327 150,319 Q122,327 114,334Z" fill="#DC6A7C"/>
-      <!-- Center line -->
-      <path d="M120,334 Q150,340 180,334" stroke="#A83F55" stroke-width="0.8" fill="none" opacity="0.7"/>
-      <!-- Highlight -->
-      <path d="M136,327 Q150,322 164,327" stroke="white" stroke-width="1.2" fill="none" opacity="0.22"/>
-
-      <!-- ── Zone label pills ── -->
-      <g style="pointer-events:none">
-        <rect x="112" y="157" width="76" height="20" rx="10" fill="white" fill-opacity="0.85"/>
-        <text x="150" y="171" text-anchor="middle" font-size="10" fill="#A05840" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">肌・ファンデ</text>
-
-        <rect x="70" y="195" width="30" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
-        <text x="85" y="207" text-anchor="middle" font-size="9" fill="#5050A0" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">眉</text>
-        <rect x="200" y="195" width="30" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
-        <text x="215" y="207" text-anchor="middle" font-size="9" fill="#5050A0" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">眉</text>
-
-        <rect x="76" y="246" width="28" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
-        <text x="90" y="258" text-anchor="middle" font-size="9" fill="#6050A8" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">目</text>
-        <rect x="196" y="246" width="28" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
-        <text x="210" y="258" text-anchor="middle" font-size="9" fill="#6050A8" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">目</text>
-
-        <rect x="30" y="282" width="42" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
-        <text x="51" y="294" text-anchor="middle" font-size="9" fill="#B04858" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">チーク</text>
-        <rect x="228" y="282" width="42" height="17" rx="8.5" fill="white" fill-opacity="0.85"/>
-        <text x="249" y="294" text-anchor="middle" font-size="9" fill="#B04858" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">チーク</text>
-
-        <rect x="120" y="370" width="60" height="20" rx="10" fill="white" fill-opacity="0.85"/>
-        <text x="150" y="384" text-anchor="middle" font-size="10" fill="#B03050" font-family="'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif" font-weight="700">リップ</text>
-      </g>
-
-      <!-- ── Clickable zones (transparent, topmost) ── -->
-      <ellipse class="zone" data-zone="skin"    cx="150" cy="174" rx="96"  ry="67"  fill="transparent"/>
-      <path    class="zone" data-zone="eyebrow" d="M72,202 Q106,186 140,198" stroke="transparent" stroke-width="26" fill="none"/>
-      <path    class="zone" data-zone="eyebrow" d="M160,198 Q194,186 228,202" stroke="transparent" stroke-width="26" fill="none"/>
-      <ellipse class="zone" data-zone="eye"     cx="104" cy="226" rx="38"  ry="24"  fill="transparent"/>
-      <ellipse class="zone" data-zone="eye"     cx="196" cy="226" rx="38"  ry="24"  fill="transparent"/>
-      <ellipse class="zone" data-zone="cheek"   cx="66"  cy="276" rx="49"  ry="40"  fill="transparent"/>
-      <ellipse class="zone" data-zone="cheek"   cx="234" cy="276" rx="49"  ry="40"  fill="transparent"/>
-      <ellipse class="zone" data-zone="lip"     cx="150" cy="336" rx="53"  ry="29"  fill="transparent"/>
-    </svg>
+    <div class="face-container">
+      <img src="manekin.svg" class="manekin-img" alt="顔マネキン">
+      <!-- Clickable zone overlays -->
+      <div id="ov-skin"    class="zone-overlay zone" data-zone="skin"></div>
+      <div id="ov-brow-l"  class="zone-overlay zone" data-zone="eyebrow"></div>
+      <div id="ov-brow-r"  class="zone-overlay zone" data-zone="eyebrow"></div>
+      <div id="ov-eye-l"   class="zone-overlay zone" data-zone="eye"></div>
+      <div id="ov-eye-r"   class="zone-overlay zone" data-zone="eye"></div>
+      <div id="ov-cheek-l" class="zone-overlay zone" data-zone="cheek"></div>
+      <div id="ov-cheek-r" class="zone-overlay zone" data-zone="cheek"></div>
+      <div id="ov-lip"     class="zone-overlay zone" data-zone="lip"></div>
+      <!-- Zone labels -->
+      <div class="zone-label-pill" style="top:20%;left:50%">肌・ファンデ</div>
+      <div class="zone-label-pill" style="top:37%;left:26%">眉</div>
+      <div class="zone-label-pill" style="top:37%;left:74%">眉</div>
+      <div class="zone-label-pill" style="top:48%;left:22%">目</div>
+      <div class="zone-label-pill" style="top:48%;left:78%">目</div>
+      <div class="zone-label-pill" style="top:60%;left:10%">チーク</div>
+      <div class="zone-label-pill" style="top:60%;left:90%">チーク</div>
+      <div class="zone-label-pill" style="top:72%;left:50%">リップ</div>
+    </div>
 
     <!-- Budget filter -->
     <div class="budget-wrap">
@@ -472,15 +389,15 @@ const DB = {
 
 // ── Zone config ──────────────────────────────────────────────
 const ZONES = {
-  skin:    { label:'肌・ファンデ', icon:'✨', overlays:['ov-skin'],
+  skin:    { label:'肌・ファンデ', icon:'✨', color:'rgba(255,128,80,', overlays:['ov-skin'],
              finishes:['ツヤ','セミマット','マット','パウダー','さらさら','ミルク'] },
-  eye:     { label:'目元',         icon:'👁', overlays:['ov-eye-l','ov-eye-r'],
+  eye:     { label:'目元',         icon:'👁', color:'rgba(128,96,232,', overlays:['ov-eye-l','ov-eye-r'],
              finishes:['シマー','マット','グリッター','パール','ラメ','シアー'] },
-  eyebrow: { label:'眉',           icon:'🖊', overlays:['ov-brow-l','ov-brow-r'],
+  eyebrow: { label:'眉',           icon:'🖊', color:'rgba(80,80,200,', overlays:['ov-brow-l','ov-brow-r'],
              finishes:['パウダー','ペンシル'] },
-  cheek:   { label:'チーク',       icon:'🌸', overlays:['ov-cheek-l','ov-cheek-r'],
+  cheek:   { label:'チーク',       icon:'🌸', color:'rgba(255,80,112,', overlays:['ov-cheek-l','ov-cheek-r'],
              finishes:['パウダー','クリーム','シマー','ハイライト'] },
-  lip:     { label:'リップ',       icon:'💄', overlays:['ov-lip'],
+  lip:     { label:'リップ',       icon:'💄', color:'rgba(255,32,80,', overlays:['ov-lip'],
              finishes:['グロス','マット','セミマット','ティント','シアー'] },
 };
 
@@ -498,14 +415,12 @@ function adjColor(hex, n) {
   return '#'+((r<<16)|(g<<8)|b).toString(16).padStart(6,'0');
 }
 
-const OV_REST = 0.07, OV_HOVER = 0.18, OV_ACTIVE = 0.36;
-
 function setOverlays(hoverZone = null) {
   Object.entries(ZONES).forEach(([z, zc]) => {
-    const op = z === S.zone ? OV_ACTIVE : z === hoverZone ? OV_HOVER : OV_REST;
+    const alpha = z === S.zone ? 0.35 : z === hoverZone ? 0.18 : 0.05;
     zc.overlays.forEach(id => {
       const el = document.getElementById(id);
-      if (el) el.setAttribute('opacity', String(op));
+      if (el) el.style.background = zc.color + alpha + ')';
     });
   });
 }
