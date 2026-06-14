@@ -502,7 +502,7 @@ function renderProducts(items) {
     <div class="product-card">
       ${p.img
         ? `<div class="product-img" style="background:${p.bg};padding:0;overflow:hidden">
-             <img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='<div style=\\'font-size:32px;margin-bottom:4px\\'>${p.icon}</div><div class=\\'brand-badge\\'>${p.brand}</div>'">
+             <img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;padding:8px" onerror="this.parentElement.innerHTML='<div style=\\'font-size:32px;margin-bottom:4px\\'>${p.icon}</div><div class=\\'brand-badge\\'>${p.brand}</div>'">
            </div>`
         : `<div class="product-img" style="background:linear-gradient(135deg,${p.bg},${adjColor(p.bg,-30)})">
              <div style="font-size:32px">${p.icon}</div>
