@@ -291,31 +291,36 @@ const DB = {
       desc:'ふわふわのマット仕上がり。毛穴・テカリをしっかりカバー',
       price:880, finish:['マット','パウダー'], colors:['オークル','ベージュ','ピンク'],
       look:['natural','casual','office'], bg:'#C8A878', icon:'✨',
-      amazon:dp('B005MVFRXM'), rakuten:rak('CANMAKE マシュマロフィニッシュパウダー') },
+      img:'https://images-na.ssl-images-amazon.com/images/P/B005MVFRXM._SL300_.jpg',
+      amazon:'https://amzn.to/4uBLxLZ', rakuten:rak('CANMAKE マシュマロフィニッシュパウダー') },
 
     { id:'s2', brand:'CEZANNE', name:'UVウルトラフィットベース',
       desc:'SPF50+ PA++++。軽い使用感で崩れをしっかり防ぐ下地',
       price:748, finish:['セミマット'], colors:['ピンクベージュ','ナチュラルベージュ'],
       look:['natural','casual','office'], bg:'#B89868', icon:'✨',
-      amazon:dp('B005MI8T4O'), rakuten:rak('CEZANNE UVウルトラフィットベース') },
+      img:'https://images-na.ssl-images-amazon.com/images/P/B005MI8T4O._SL300_.jpg',
+      amazon:'https://amzn.to/4vMlqmz', rakuten:rak('CEZANNE UVウルトラフィットベース') },
 
     { id:'s3', brand:'excel', name:'スキンケアUV',
       desc:'スキンケア成分補給しながら紫外線カット。化粧崩れも防ぐ',
       price:1980, finish:['ツヤ','セミマット'], colors:['ナチュラル'],
       look:['natural','office'], bg:'#D8B888', icon:'✨',
-      amazon:dp('B0C8N9JQZM'), rakuten:rak('excel スキンケアUV') },
+      img:'https://images-na.ssl-images-amazon.com/images/P/B0C8N9JQZM._SL300_.jpg',
+      amazon:'https://amzn.to/4uEC7PQ', rakuten:rak('excel スキンケアUV') },
 
     { id:'s4', brand:'Shiseido', name:'インテグレート グレイシィ',
       desc:'ファンデ・日焼け止め・スキンケア一体型。素肌感ある仕上がり',
       price:1760, finish:['ツヤ','セミマット'], colors:['オークル','ベージュ','ピンクオークル'],
       look:['natural','office'], bg:'#B89070', icon:'✨',
-      amazon:dp('B008MH8V0Y'), rakuten:rak('インテグレート グレイシィ ファンデーション') },
+      img:'https://images-na.ssl-images-amazon.com/images/P/B008MH8V0Y._SL300_.jpg',
+      amazon:'https://amzn.to/4fFfpTX', rakuten:rak('インテグレート グレイシィ ファンデーション') },
 
     { id:'s5', brand:'NARS', name:'ナチュラルラディアント ファンデ',
       desc:'素肌のような自然な輝き。24時間持続処方で崩れにくい',
       price:7150, finish:['ツヤ','ナチュラル'], colors:['全30色展開'],
       look:['gorgeous','office'], bg:'#9C8060', icon:'✨',
-      amazon:dp('B07B49DG7B'), rakuten:rak('NARS ナチュラルラディアント') },
+      img:'https://images-na.ssl-images-amazon.com/images/P/B07B49DG7B._SL300_.jpg',
+      amazon:'https://amzn.to/3S859tJ', rakuten:rak('NARS ナチュラルラディアント') },
 
     { id:'s6', brand:'SUQQU', name:'イクイップト フルイド ファンデ',
       desc:'肌本来の美しさを引き出すスキンケアベース。まるで素肌感',
@@ -327,13 +332,15 @@ const DB = {
       desc:'SPF50+ PA++++。みずみずしくさらっとした日焼け止めの定番',
       price:880, finish:['さらさら'], colors:['無色'],
       look:['natural','casual'], bg:'#88B8D8', icon:'☀️',
-      amazon:dp('B07ND9JXWJ'), rakuten:rak('ビオレ UV アクアリッチ') },
+      img:'https://images-na.ssl-images-amazon.com/images/P/B07ND9JXWJ._SL300_.jpg',
+      amazon:'https://amzn.to/4aMGAbY', rakuten:rak('ビオレ UV アクアリッチ') },
 
     { id:'s8', brand:'Anessa', name:'パーフェクトUV スキンケアミルク',
       desc:'汗・水・こすれに強い高UVカット。スキンケア成分で肌も守る',
       price:2530, finish:['ミルク'], colors:['無色'],
       look:['casual','natural'], bg:'#D8B840', icon:'☀️',
-      amazon:dp('B0CSSVF9GQ'), rakuten:rak('アネッサ パーフェクトUV') },
+      img:'https://images-na.ssl-images-amazon.com/images/P/B0CSSVF9GQ._SL300_.jpg',
+      amazon:'https://www.amazon.co.jp/dp/B0CSSVF9GQ?tag=96nekozizi-22-22', rakuten:rak('アネッサ パーフェクトUV') },
   ],
 
   cheek: [
@@ -493,10 +500,15 @@ function renderProducts(items) {
   }
   grid.innerHTML = items.map(p => `
     <div class="product-card">
-      <div class="product-img" style="background:linear-gradient(135deg,${p.bg},${adjColor(p.bg,-30)})">
-        <div style="font-size:32px">${p.icon}</div>
-        <div class="brand-badge">${p.brand}</div>
-      </div>
+      ${p.img
+        ? `<div class="product-img" style="background:${p.bg};padding:0;overflow:hidden">
+             <img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='<div style=\\'font-size:32px;margin-bottom:4px\\'>${p.icon}</div><div class=\\'brand-badge\\'>${p.brand}</div>'">
+           </div>`
+        : `<div class="product-img" style="background:linear-gradient(135deg,${p.bg},${adjColor(p.bg,-30)})">
+             <div style="font-size:32px">${p.icon}</div>
+             <div class="brand-badge">${p.brand}</div>
+           </div>`
+      }
       <div class="product-info">
         <div class="product-brand">${p.brand}</div>
         <div class="product-name">${p.name}</div>
