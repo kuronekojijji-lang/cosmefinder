@@ -181,6 +181,9 @@ header p{font-size:12px;color:var(--text-light);margin-top:1px}
 
 const AFFILIATE = { amazon: '96nekozizi-22-22', rakuten: '' };
 
+function dp(asin) {
+  return `https://www.amazon.co.jp/dp/${asin}?tag=${AFFILIATE.amazon}`;
+}
 function amz(kw) {
   return `https://www.amazon.co.jp/s?k=${encodeURIComponent(kw)}&tag=${AFFILIATE.amazon}`;
 }
@@ -194,25 +197,25 @@ const DB = {
       desc:'うるうるバーム処方でスルスルのび、一日中落ちにくい発色',
       price:748, finish:['グロス','ティント'], colors:['ピンク','レッド','コーラル','ヌード'],
       look:['natural','casual'], bg:'#D87090', icon:'💋',
-      amazon:amz('CANMAKE ステイオンバームルージュ'), rakuten:rak('CANMAKE ステイオンバームルージュ') },
+      amazon:dp('B08WLQWMDR'), rakuten:rak('CANMAKE ステイオンバームルージュ') },
 
     { id:'l2', brand:'CEZANNE', name:'ウォータリーティントリップ',
       desc:'水分密着成分で唇にじわっとティント。ふんわり染まる',
       price:528, finish:['ティント','シアー'], colors:['ピンク','ローズ','コーラル'],
       look:['natural','office'], bg:'#C06080', icon:'💋',
-      amazon:amz('CEZANNE ウォータリーティントリップ'), rakuten:rak('CEZANNE ウォータリーティントリップ') },
+      amazon:dp('B08TTJL78F'), rakuten:rak('CEZANNE ウォータリーティントリップ') },
 
     { id:'l3', brand:'KATE', name:'リップモンスター',
       desc:'まるで素唇のように密着。12時間持続の高発色リップ',
       price:1430, finish:['マット','セミマット'], colors:['レッド','バーガンディ','テラコッタ','ブラウン'],
       look:['trendy','gorgeous','office'], bg:'#902040', icon:'💋',
-      amazon:amz('KATE リップモンスター'), rakuten:rak('KATE リップモンスター') },
+      amazon:dp('B08YKCZ6Y1'), rakuten:rak('KATE リップモンスター') },
 
     { id:'l4', brand:'excel', name:'グレイズバームリップ',
       desc:'美容液成分豊富なバーム。艶感と保湿を同時に叶える',
       price:1650, finish:['グロス','シアー'], colors:['ヌード','ピンク','コーラル'],
       look:['natural','office'], bg:'#C88068', icon:'💋',
-      amazon:amz('excel グレイズバームリップ'), rakuten:rak('excel グレイズバームリップ') },
+      amazon:dp('B07HNSYWGZ'), rakuten:rak('excel グレイズバームリップ') },
 
     { id:'l5', brand:'MAJOLICA MAJORCA', name:'ルージュマジック',
       desc:'うるうるガラス玉リップ。透明感とツヤ感が際立つ',
@@ -224,13 +227,13 @@ const DB = {
       desc:'リキッドからパウダーに変化。密着感と発色のバランスが秀逸',
       price:2530, finish:['マット','セミマット'], colors:['レッド','ピンク','コーラル','バーガンディ'],
       look:['gorgeous','office'], bg:'#802030', icon:'💋',
-      amazon:amz('マキアージュ ドラマティックルージュ'), rakuten:rak('マキアージュ ドラマティックルージュ') },
+      amazon:dp('B07HYMVG5Z'), rakuten:rak('マキアージュ ドラマティックルージュ') },
 
     { id:'l7', brand:'RMK', name:'ラディアントリップカラー',
       desc:'上品な艶と発色。保湿成分配合で唇をケアしながら彩る',
       price:3300, finish:['グロス','シアー'], colors:['ピンク','ローズ','レッド','ヌード'],
       look:['gorgeous','office'], bg:'#C05070', icon:'💋',
-      amazon:amz('RMK ラディアントリップカラー'), rakuten:rak('RMK リップカラー') },
+      amazon:dp('B0B51TDKFY'), rakuten:rak('RMK リップカラー') },
 
     { id:'l8', brand:'Visée', name:'ラスティングリップカラー',
       desc:'カラーが唇に密着。時間がたっても崩れない仕上がり',
@@ -244,37 +247,37 @@ const DB = {
       desc:'5色パレットで立体的な目元を演出。初心者でも失敗しにくい',
       price:748, finish:['シマー','マット'], colors:['ブラウン','ピンク','パープル'],
       look:['natural','casual'], bg:'#A07050', icon:'👁',
-      amazon:amz('CANMAKE パーフェクトスタイリストアイズ'), rakuten:rak('CANMAKE パーフェクトスタイリストアイズ') },
+      amazon:dp('B07HNR6NNC'), rakuten:rak('CANMAKE パーフェクトスタイリストアイズ') },
 
     { id:'e2', brand:'CEZANNE', name:'トーンアップアイシャドウ',
       desc:'肌なじみのよい絶妙カラーで自然な奥行きを演出',
       price:528, finish:['シマー','シアー'], colors:['ベージュ','ブラウン','ピンクベージュ'],
       look:['natural','office'], bg:'#C0A080', icon:'👁',
-      amazon:amz('CEZANNE トーンアップアイシャドウ'), rakuten:rak('CEZANNE トーンアップアイシャドウ') },
+      amazon:dp('B0129M7LJ4'), rakuten:rak('CEZANNE トーンアップアイシャドウ') },
 
     { id:'e3', brand:'excel', name:'スキニーリッチシャドウ',
       desc:'4色が程よく混ざり合い深みのある立体的な目元に',
       price:1650, finish:['シマー','マット','グリッター'], colors:['ブラウン','ピンク','スモーキー'],
       look:['natural','office','trendy'], bg:'#806040', icon:'👁',
-      amazon:amz('excel スキニーリッチシャドウ'), rakuten:rak('excel スキニーリッチシャドウ') },
+      amazon:dp('B015FG6RXM'), rakuten:rak('excel スキニーリッチシャドウ') },
 
     { id:'e4', brand:'KATE', name:'ザアイカラー',
       desc:'単色高発色アイシャドウ。重ねづけで多彩な表情が生まれる',
       price:1320, finish:['グリッター','シマー','マット'], colors:['ゴールド','シルバー','パープル','レッド'],
       look:['gorgeous','trendy'], bg:'#504890', icon:'👁',
-      amazon:amz('KATE ザアイカラー'), rakuten:rak('KATE ザアイカラー') },
+      amazon:dp('B07PXYLXLF'), rakuten:rak('KATE ザアイカラー') },
 
     { id:'e5', brand:'ADDICTION', name:'ザ アイシャドウ',
       desc:'繊細なパールが目元を上品に演出。重ねるほど深みが増す',
       price:2750, finish:['シマー','パール','マット'], colors:['ベージュ','ブラウン','ローズ'],
       look:['gorgeous','office'], bg:'#806078', icon:'👁',
-      amazon:amz('ADDICTION ザ アイシャドウ'), rakuten:rak('アディクション アイシャドウ') },
+      amazon:dp('B08WRPBBPY'), rakuten:rak('アディクション アイシャドウ') },
 
     { id:'e6', brand:'MAJOLICA MAJORCA', name:'シャドーカスタマイズ',
       desc:'ラメ・マット・パール全入りでドラマチックな目元に仕上がる',
       price:715, finish:['グリッター','ラメ','マット'], colors:['ピンク','ゴールド','パープル'],
       look:['gorgeous','trendy'], bg:'#9060A8', icon:'👁',
-      amazon:amz('マジョリカマジョルカ シャドーカスタマイズ'), rakuten:rak('マジョリカマジョルカ シャドーカスタマイズ') },
+      amazon:dp('B09XXCMBGY'), rakuten:rak('マジョリカマジョルカ シャドーカスタマイズ') },
 
     { id:'e7', brand:'Visée AVANT', name:'アイパレット',
       desc:'洗練されたカラーバランスで彫り深い目元を演出',
@@ -288,31 +291,31 @@ const DB = {
       desc:'ふわふわのマット仕上がり。毛穴・テカリをしっかりカバー',
       price:880, finish:['マット','パウダー'], colors:['オークル','ベージュ','ピンク'],
       look:['natural','casual','office'], bg:'#C8A878', icon:'✨',
-      amazon:amz('CANMAKE マシュマロフィニッシュパウダー'), rakuten:rak('CANMAKE マシュマロフィニッシュパウダー') },
+      amazon:dp('B005MVFRXM'), rakuten:rak('CANMAKE マシュマロフィニッシュパウダー') },
 
     { id:'s2', brand:'CEZANNE', name:'UVウルトラフィットベース',
       desc:'SPF50+ PA++++。軽い使用感で崩れをしっかり防ぐ下地',
       price:748, finish:['セミマット'], colors:['ピンクベージュ','ナチュラルベージュ'],
       look:['natural','casual','office'], bg:'#B89868', icon:'✨',
-      amazon:amz('CEZANNE UVウルトラフィットベース'), rakuten:rak('CEZANNE UVウルトラフィットベース') },
+      amazon:dp('B005MI8T4O'), rakuten:rak('CEZANNE UVウルトラフィットベース') },
 
     { id:'s3', brand:'excel', name:'スキンケアUV',
       desc:'スキンケア成分補給しながら紫外線カット。化粧崩れも防ぐ',
       price:1980, finish:['ツヤ','セミマット'], colors:['ナチュラル'],
       look:['natural','office'], bg:'#D8B888', icon:'✨',
-      amazon:amz('excel スキンケアUV'), rakuten:rak('excel スキンケアUV') },
+      amazon:dp('B0C8N9JQZM'), rakuten:rak('excel スキンケアUV') },
 
     { id:'s4', brand:'Shiseido', name:'インテグレート グレイシィ',
       desc:'ファンデ・日焼け止め・スキンケア一体型。素肌感ある仕上がり',
       price:1760, finish:['ツヤ','セミマット'], colors:['オークル','ベージュ','ピンクオークル'],
       look:['natural','office'], bg:'#B89070', icon:'✨',
-      amazon:amz('インテグレート グレイシィ ファンデ'), rakuten:rak('インテグレート グレイシィ ファンデーション') },
+      amazon:dp('B008MH8V0Y'), rakuten:rak('インテグレート グレイシィ ファンデーション') },
 
     { id:'s5', brand:'NARS', name:'ナチュラルラディアント ファンデ',
       desc:'素肌のような自然な輝き。24時間持続処方で崩れにくい',
       price:7150, finish:['ツヤ','ナチュラル'], colors:['全30色展開'],
       look:['gorgeous','office'], bg:'#9C8060', icon:'✨',
-      amazon:amz('NARS ナチュラルラディアント ファンデーション'), rakuten:rak('NARS ナチュラルラディアント') },
+      amazon:dp('B07B49DG7B'), rakuten:rak('NARS ナチュラルラディアント') },
 
     { id:'s6', brand:'SUQQU', name:'イクイップト フルイド ファンデ',
       desc:'肌本来の美しさを引き出すスキンケアベース。まるで素肌感',
@@ -324,13 +327,13 @@ const DB = {
       desc:'SPF50+ PA++++。みずみずしくさらっとした日焼け止めの定番',
       price:880, finish:['さらさら'], colors:['無色'],
       look:['natural','casual'], bg:'#88B8D8', icon:'☀️',
-      amazon:amz('Biore UV アクアリッチ ウォータリーエッセンス'), rakuten:rak('ビオレ UV アクアリッチ') },
+      amazon:dp('B07ND9JXWJ'), rakuten:rak('ビオレ UV アクアリッチ') },
 
     { id:'s8', brand:'Anessa', name:'パーフェクトUV スキンケアミルク',
       desc:'汗・水・こすれに強い高UVカット。スキンケア成分で肌も守る',
       price:2530, finish:['ミルク'], colors:['無色'],
       look:['casual','natural'], bg:'#D8B840', icon:'☀️',
-      amazon:amz('Anessa パーフェクトUV スキンケアミルク'), rakuten:rak('アネッサ パーフェクトUV') },
+      amazon:dp('B0CSSVF9GQ'), rakuten:rak('アネッサ パーフェクトUV') },
   ],
 
   cheek: [
@@ -338,31 +341,31 @@ const DB = {
       desc:'クリームタイプで肌に密着。ふんわり自然な血色感に',
       price:748, finish:['クリーム'], colors:['ピンク','オレンジ','コーラル','レッド'],
       look:['natural','casual'], bg:'#F0A0A8', icon:'🌸',
-      amazon:amz('CANMAKE クリームチーク'), rakuten:rak('CANMAKE クリームチーク') },
+      amazon:dp('B0971ZSGFT'), rakuten:rak('CANMAKE クリームチーク') },
 
     { id:'c2', brand:'CEZANNE', name:'チークブラッシュ',
       desc:'ふんわり発色するパウダーチーク。自然な血色感を演出',
       price:528, finish:['パウダー'], colors:['ピンク','コーラル','オレンジ','テラコッタ'],
       look:['natural','casual','office'], bg:'#D8A888', icon:'🌸',
-      amazon:amz('CEZANNE チークブラッシュ'), rakuten:rak('CEZANNE チークブラッシュ') },
+      amazon:dp('B0C82DRL2Y'), rakuten:rak('CEZANNE チークブラッシュ') },
 
     { id:'c3', brand:'NARS', name:'ブラッシュ',
       desc:'一日中続く発色のよいパウダーチーク。多彩なカラー展開',
       price:4180, finish:['パウダー','シマー'], colors:['ピンク','コーラル','ローズ','ピーチ'],
       look:['gorgeous','trendy'], bg:'#D05878', icon:'🌸',
-      amazon:amz('NARS ブラッシュ'), rakuten:rak('NARS ブラッシュ') },
+      amazon:dp('B016WBWIEG'), rakuten:rak('NARS ブラッシュ') },
 
     { id:'c4', brand:'RMK', name:'インジーニアス パウダーチークス N',
       desc:'上品な血色感を与えるパウダーチーク。透明感ある仕上がり',
       price:3080, finish:['パウダー','シマー'], colors:['ピンク','コーラル','ベージュ'],
       look:['gorgeous','office'], bg:'#C07888', icon:'🌸',
-      amazon:amz('RMK インジーニアス パウダーチークス'), rakuten:rak('RMK パウダーチークス') },
+      amazon:dp('B00OIDBUUY'), rakuten:rak('RMK パウダーチークス') },
 
     { id:'c5', brand:'Shiseido', name:'インテグレート チーク＆ハイライター',
       desc:'チークとハイライトが一体化。立体感ある顔立ちに仕上がる',
       price:1650, finish:['パウダー','ハイライト'], colors:['ピンク','オレンジ'],
       look:['natural','trendy'], bg:'#E0B0A0', icon:'🌸',
-      amazon:amz('インテグレート チーク ハイライター'), rakuten:rak('インテグレート チーク') },
+      amazon:dp('B01LSJA42U'), rakuten:rak('インテグレート チーク') },
   ],
 
   eyebrow: [
@@ -370,25 +373,25 @@ const DB = {
       desc:'3色パレットで自然な立体感のある眉に。初心者でも使いやすい',
       price:528, finish:['パウダー'], colors:['ブラウン','グレー','アッシュ'],
       look:['natural','casual','office'], bg:'#806040', icon:'🖊',
-      amazon:amz('CEZANNE パウダーアイブロウ'), rakuten:rak('CEZANNE パウダーアイブロウ') },
+      amazon:dp('B08W3V1PP6'), rakuten:rak('CEZANNE パウダーアイブロウ') },
 
     { id:'b2', brand:'excel', name:'パウダー&ペンシルアイブロウEX',
       desc:'パウダーとペンシルを組み合わせて思い通りの眉を実現',
       price:1320, finish:['パウダー','ペンシル'], colors:['ブラウン','アッシュ','ライトブラウン'],
       look:['natural','office','trendy'], bg:'#604020', icon:'🖊',
-      amazon:amz('excel パウダーペンシルアイブロウ'), rakuten:rak('excel アイブロウ') },
+      amazon:dp('B015FG6ZN4'), rakuten:rak('excel アイブロウ') },
 
     { id:'b3', brand:'KATE', name:'デザイニングアイブロウ3D',
       desc:'3Dアイブロウで立体的でリアルな毛並みを再現',
       price:1430, finish:['パウダー','ペンシル'], colors:['ブラウン','アッシュ','グレー'],
       look:['trendy','gorgeous'], bg:'#503020', icon:'🖊',
-      amazon:amz('KATE デザイニングアイブロウ3D'), rakuten:rak('KATE デザイニングアイブロウ') },
+      amazon:dp('B071XTGPN2'), rakuten:rak('KATE デザイニングアイブロウ') },
 
     { id:'b4', brand:'CANMAKE', name:'パウダーアイブロウ',
       desc:'やわらかなパウダーで自然な眉に。にじみにくい処方',
       price:550, finish:['パウダー'], colors:['ナチュラルブラウン','グレーブラウン'],
       look:['natural','casual'], bg:'#987050', icon:'🖊',
-      amazon:amz('CANMAKE パウダーアイブロウ'), rakuten:rak('CANMAKE パウダーアイブロウ') },
+      amazon:dp('B0049EESM4'), rakuten:rak('CANMAKE パウダーアイブロウ') },
   ],
 };
 
