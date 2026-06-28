@@ -18,14 +18,15 @@ header{background:linear-gradient(135deg,#F2D0D8 0%,#F8E8E0 100%);padding:14px 2
 header .logo{font-size:26px}
 header h1{font-size:19px;color:var(--brown);font-weight:800;letter-spacing:-0.3px}
 header p{font-size:12px;color:var(--text-light);margin-top:1px}
-/* ── Look bar ── */
-.look-bar{background:var(--white);padding:10px 20px;border-bottom:1px solid #F0DDD9;display:flex;gap:6px;align-items:center;overflow-x:auto;flex-shrink:0}
+/* ── Look bar / tone bar ── */
+.look-bar{background:var(--white);padding:8px 20px;border-bottom:1px solid #F0DDD9;display:flex;gap:6px;align-items:center;overflow-x:auto;flex-shrink:0}
+.tone-bar{background:#FDF5F8;padding:7px 20px;border-bottom:1px solid #F0DDD9;display:flex;gap:6px;align-items:center;overflow-x:auto;flex-shrink:0}
 .look-bar-label{font-size:12px;color:var(--text-light);white-space:nowrap;margin-right:2px;font-weight:600}
 .look-btn{padding:5px 14px;border-radius:20px;border:1.5px solid var(--rose-mid);background:transparent;color:var(--brown);font-size:12px;cursor:pointer;white-space:nowrap;transition:all .18s;font-family:inherit}
 .look-btn:hover{border-color:var(--rose);color:var(--rose)}
 .look-btn.active{background:var(--rose);color:white;border-color:var(--rose)}
 /* ── Layout ── */
-.main{display:grid;grid-template-columns:310px 1fr;height:calc(100vh - 98px)}
+.main{display:grid;grid-template-columns:310px 1fr;height:calc(100vh - 130px)}
 /* ── Face panel ── */
 .face-panel{background:var(--white);border-right:1px solid #F0DDD9;display:flex;flex-direction:column;align-items:center;padding:20px 14px;overflow-y:auto}
 .face-hint{font-size:12px;color:var(--text-light);margin-bottom:14px;text-align:center;line-height:1.6}
@@ -127,6 +128,15 @@ header p{font-size:12px;color:var(--text-light);margin-top:1px}
   <button class="look-btn" data-look="office">オフィス</button>
 </div>
 
+<div class="tone-bar">
+  <span class="look-bar-label">パーソナルカラー：</span>
+  <button class="chip active" data-tone="all">すべて</button>
+  <button class="chip" data-tone="イエベ春">🍑 イエベ春</button>
+  <button class="chip" data-tone="イエベ秋">🍂 イエベ秋</button>
+  <button class="chip" data-tone="ブルベ夏">🌸 ブルベ夏</button>
+  <button class="chip" data-tone="ブルベ冬">❄️ ブルベ冬</button>
+</div>
+
 <div class="main">
   <!-- ── LEFT: Face panel ── -->
   <div class="face-panel">
@@ -168,17 +178,6 @@ header p{font-size:12px;color:var(--text-light);margin-top:1px}
       </div>
     </div>
 
-    <!-- Personal color filter -->
-    <div class="budget-wrap">
-      <div class="filter-label">パーソナルカラー</div>
-      <div class="chip-row">
-        <button class="chip active" data-tone="all">すべて</button>
-        <button class="chip" data-tone="イエベ春">🍑 イエベ春</button>
-        <button class="chip" data-tone="イエベ秋">🍂 イエベ秋</button>
-        <button class="chip" data-tone="ブルベ夏">🌸 ブルベ夏</button>
-        <button class="chip" data-tone="ブルベ冬">❄️ ブルベ冬</button>
-      </div>
-    </div>
   </div>
 
   <!-- ── RIGHT: Products panel ── -->
