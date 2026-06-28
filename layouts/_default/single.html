@@ -73,6 +73,16 @@
     </div>
 
     <div class="sidebar-block">
+      <h3>🎨 パーソナルカラー</h3>
+      <ul>
+        <li><a href="/tool/?tone=イエベ春">🍑 イエベ春</a></li>
+        <li><a href="/tool/?tone=イエベ秋">🍂 イエベ秋</a></li>
+        <li><a href="/tool/?tone=ブルベ夏">🌸 ブルベ夏</a></li>
+        <li><a href="/tool/?tone=ブルベ冬">❄️ ブルベ冬</a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-block">
       <h3>📝 最新記事</h3>
       <ul>
         {{ range first 5 (where .Site.RegularPages "Type" "posts") }}
