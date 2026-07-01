@@ -96,6 +96,8 @@ header p{font-size:12px;color:var(--text-light);margin-top:1px}
 .btn-amazon{background:#FF9900;color:white}
 .btn-rakuten{background:#BF0000;color:white}
 .buy-btn:hover{opacity:.82}
+/* ── Popular badge ── */
+.popular-badge{position:absolute;top:7px;right:7px;font-size:10px;font-weight:800;padding:3px 8px;border-radius:8px;white-space:nowrap;box-shadow:0 1px 5px rgba(0,0,0,.25);letter-spacing:.2px;pointer-events:none}
 /* ── Empty state ── */
 .empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-light)}
 .empty-state .e-icon{font-size:52px;margin-bottom:14px}
@@ -209,214 +211,300 @@ function rak(kw) {
   return `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(kw)}/`;
 }
 
+function popularStyle(p) {
+  if (p==='SNS話題')  return 'background:#FF3D5A;color:white';
+  if (p==='殿堂入り') return 'background:#C89000;color:white';
+  if (p==='定番人気') return 'background:#6050B8;color:white';
+  if (p==='新作話題') return 'background:#18A060;color:white';
+  return 'background:#888;color:white';
+}
+
 const DB = {
   lip: [
     { id:'l1', brand:'CANMAKE', name:'ステイオンバームルージュ',
       desc:'うるうるバーム処方でスルスルのび、一日中落ちにくい発色',
-      price:748, finish:['グロス','ティント'], colors:['ピンク','レッド','コーラル','ヌード'],
-      look:['natural','casual'], tone:['イエベ春','ブルベ夏'], bg:'#D87090', icon:'💋',
+      price:748, finish:['グロス','ティント'], look:['natural','casual'],
+      tone:['イエベ春','ブルベ夏'], popular:'定番人気', bg:'#D87090', icon:'💋',
       amazon:dp('B08WLQWMDR'), rakuten:rak('CANMAKE ステイオンバームルージュ') },
 
     { id:'l2', brand:'CEZANNE', name:'ウォータリーティントリップ',
       desc:'水分密着成分で唇にじわっとティント。ふんわり染まる',
-      price:528, finish:['ティント','シアー'], colors:['ピンク','ローズ','コーラル'],
-      look:['natural','office'], tone:['ブルベ夏','イエベ春'], bg:'#C06080', icon:'💋',
+      price:528, finish:['ティント','シアー'], look:['natural','office'],
+      tone:['ブルベ夏','イエベ春'], popular:'定番人気', bg:'#C06080', icon:'💋',
       amazon:dp('B08TTJL78F'), rakuten:rak('CEZANNE ウォータリーティントリップ') },
 
     { id:'l3', brand:'KATE', name:'リップモンスター',
       desc:'まるで素唇のように密着。12時間持続の高発色リップ',
-      price:1430, finish:['マット','セミマット'], colors:['レッド','バーガンディ','テラコッタ','ブラウン'],
-      look:['trendy','gorgeous','office'], tone:['ブルベ冬','イエベ秋'], bg:'#902040', icon:'💋',
+      price:1430, finish:['マット','セミマット'], look:['trendy','gorgeous','office'],
+      tone:['ブルベ冬','イエベ秋'], popular:'SNS話題', bg:'#902040', icon:'💋',
       amazon:dp('B08YKCZ6Y1'), rakuten:rak('KATE リップモンスター') },
 
     { id:'l4', brand:'excel', name:'グレイズバームリップ',
       desc:'美容液成分豊富なバーム。艶感と保湿を同時に叶える',
-      price:1650, finish:['グロス','シアー'], colors:['ヌード','ピンク','コーラル'],
-      look:['natural','office'], tone:['イエベ春','ブルベ夏'], bg:'#C88068', icon:'💋',
+      price:1650, finish:['グロス','シアー'], look:['natural','office'],
+      tone:['イエベ春','ブルベ夏'], popular:'定番人気', bg:'#C88068', icon:'💋',
       amazon:dp('B07HNSYWGZ'), rakuten:rak('excel グレイズバームリップ') },
 
     { id:'l5', brand:'MAJOLICA MAJORCA', name:'ルージュマジック',
       desc:'うるうるガラス玉リップ。透明感とツヤ感が際立つ',
-      price:1430, finish:['グロス'], colors:['レッド','ピンク','コーラル','パープル'],
-      look:['gorgeous','trendy'], tone:['ブルベ夏','ブルベ冬'], bg:'#C03055', icon:'💋',
+      price:1430, finish:['グロス'], look:['gorgeous','trendy'],
+      tone:['ブルベ夏','ブルベ冬'], popular:'定番人気', bg:'#C03055', icon:'💋',
       amazon:amz('マジョリカマジョルカ ルージュマジック'), rakuten:rak('マジョリカマジョルカ ルージュマジック') },
 
     { id:'l6', brand:'Shiseido', name:'マキアージュ ドラマティックルージュ',
       desc:'リキッドからパウダーに変化。密着感と発色のバランスが秀逸',
-      price:2530, finish:['マット','セミマット'], colors:['レッド','ピンク','コーラル','バーガンディ'],
-      look:['gorgeous','office'], tone:['ブルベ冬','イエベ秋','ブルベ夏'], bg:'#802030', icon:'💋',
+      price:2530, finish:['マット','セミマット'], look:['gorgeous','office'],
+      tone:['ブルベ冬','イエベ秋','ブルベ夏'], popular:'定番人気', bg:'#802030', icon:'💋',
       amazon:dp('B07HYMVG5Z'), rakuten:rak('マキアージュ ドラマティックルージュ') },
 
     { id:'l7', brand:'RMK', name:'ラディアントリップカラー',
       desc:'上品な艶と発色。保湿成分配合で唇をケアしながら彩る',
-      price:3300, finish:['グロス','シアー'], colors:['ピンク','ローズ','レッド','ヌード'],
-      look:['gorgeous','office'], tone:['ブルベ夏','ブルベ冬'], bg:'#C05070', icon:'💋',
+      price:3300, finish:['グロス','シアー'], look:['gorgeous','office'],
+      tone:['ブルベ夏','ブルベ冬'], popular:'定番人気', bg:'#C05070', icon:'💋',
       amazon:dp('B0B51TDKFY'), rakuten:rak('RMK リップカラー') },
 
     { id:'l8', brand:'Visée', name:'ラスティングリップカラー',
       desc:'カラーが唇に密着。時間がたっても崩れない仕上がり',
-      price:880, finish:['マット','ティント'], colors:['ブラウン','テラコッタ','レッド'],
-      look:['trendy','casual'], tone:['イエベ秋','ブルベ冬'], bg:'#985040', icon:'💋',
+      price:880, finish:['マット','ティント'], look:['trendy','casual'],
+      tone:['イエベ秋','ブルベ冬'], popular:'定番人気', bg:'#985040', icon:'💋',
       amazon:amz('Visee ラスティングリップカラー'), rakuten:rak('ヴィセ リップカラー') },
+
+    { id:'l9', brand:'OPERA', name:'リップティントN',
+      desc:'うるツヤ発色が長時間続くティントリップ。SNSで爆発的人気',
+      price:1540, finish:['ティント','グロス'], look:['natural','trendy','gorgeous'],
+      tone:['イエベ春','ブルベ夏','ブルベ冬'], popular:'SNS話題', bg:'#E04060', icon:'💋',
+      amazon:amz('OPERA リップティントN'), rakuten:rak('オペラ リップティントN') },
+
+    { id:'l10', brand:'ちふれ', name:'口紅',
+      desc:'1本400円以下の超プチプラ。豊富なカラーで塗り心地も良好',
+      price:396, finish:['シアー','セミマット'], look:['natural','casual'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'殿堂入り', bg:'#D06070', icon:'💋',
+      amazon:amz('ちふれ 口紅'), rakuten:rak('ちふれ 口紅') },
+
+    { id:'l11', brand:'rom&nd', name:'ゼロベルベットティント',
+      desc:'韓国発・まるでスキンティントのような素唇感。落ちにくい',
+      price:1650, finish:['マット','ティント'], look:['trendy','gorgeous'],
+      tone:['ブルベ冬','イエベ秋'], popular:'SNS話題', bg:'#7A2840', icon:'💋',
+      amazon:amz('ロムアンド ゼロベルベットティント'), rakuten:rak('ロムアンド ゼロベルベットティント') },
+
+    { id:'l12', brand:'Dior', name:'アディクト リップ グロウ',
+      desc:'唇本来の色を引き出すカラーリバイビング効果。保湿力も抜群',
+      price:5500, finish:['グロス','シアー'], look:['natural','gorgeous','office'],
+      tone:['ブルベ夏','イエベ春'], popular:'殿堂入り', bg:'#D08090', icon:'💋',
+      amazon:amz('Dior アディクト リップ グロウ'), rakuten:rak('ディオール リップ グロウ') },
   ],
 
   eye: [
     { id:'e1', brand:'CANMAKE', name:'パーフェクトスタイリストアイズ',
       desc:'5色パレットで立体的な目元を演出。初心者でも失敗しにくい',
-      price:748, finish:['シマー','マット'], colors:['ブラウン','ピンク','パープル'],
-      look:['natural','casual'], tone:['イエベ春','ブルベ夏'], bg:'#A07050', icon:'👁',
+      price:748, finish:['シマー','マット'], look:['natural','casual'],
+      tone:['イエベ春','ブルベ夏'], popular:'殿堂入り', bg:'#A07050', icon:'👁',
       amazon:dp('B07HNR6NNC'), rakuten:rak('CANMAKE パーフェクトスタイリストアイズ') },
 
     { id:'e2', brand:'CEZANNE', name:'トーンアップアイシャドウ',
       desc:'肌なじみのよい絶妙カラーで自然な奥行きを演出',
-      price:528, finish:['シマー','シアー'], colors:['ベージュ','ブラウン','ピンクベージュ'],
-      look:['natural','office'], tone:['イエベ春','イエベ秋'], bg:'#C0A080', icon:'👁',
+      price:528, finish:['シマー','シアー'], look:['natural','office'],
+      tone:['イエベ春','イエベ秋'], popular:'定番人気', bg:'#C0A080', icon:'👁',
       amazon:dp('B0129M7LJ4'), rakuten:rak('CEZANNE トーンアップアイシャドウ') },
 
     { id:'e3', brand:'excel', name:'スキニーリッチシャドウ',
       desc:'4色が程よく混ざり合い深みのある立体的な目元に',
-      price:1650, finish:['シマー','マット','グリッター'], colors:['ブラウン','ピンク','スモーキー'],
-      look:['natural','office','trendy'], tone:['イエベ春','ブルベ夏','イエベ秋'], bg:'#806040', icon:'👁',
+      price:1650, finish:['シマー','マット','グリッター'], look:['natural','office','trendy'],
+      tone:['イエベ春','ブルベ夏','イエベ秋'], popular:'SNS話題', bg:'#806040', icon:'👁',
       amazon:dp('B015FG6RXM'), rakuten:rak('excel スキニーリッチシャドウ') },
 
     { id:'e4', brand:'KATE', name:'ザアイカラー',
       desc:'単色高発色アイシャドウ。重ねづけで多彩な表情が生まれる',
-      price:1320, finish:['グリッター','シマー','マット'], colors:['ゴールド','シルバー','パープル','レッド'],
-      look:['gorgeous','trendy'], tone:['イエベ秋','ブルベ冬','イエベ春'], bg:'#504890', icon:'👁',
+      price:1320, finish:['グリッター','シマー','マット'], look:['gorgeous','trendy'],
+      tone:['イエベ秋','ブルベ冬','イエベ春'], popular:'SNS話題', bg:'#504890', icon:'👁',
       amazon:dp('B07PXYLXLF'), rakuten:rak('KATE ザアイカラー') },
 
     { id:'e5', brand:'ADDICTION', name:'ザ アイシャドウ',
       desc:'繊細なパールが目元を上品に演出。重ねるほど深みが増す',
-      price:2750, finish:['シマー','パール','マット'], colors:['ベージュ','ブラウン','ローズ'],
-      look:['gorgeous','office'], tone:['ブルベ夏','イエベ春'], bg:'#806078', icon:'👁',
+      price:2750, finish:['シマー','パール','マット'], look:['gorgeous','office'],
+      tone:['ブルベ夏','イエベ春'], popular:'定番人気', bg:'#806078', icon:'👁',
       amazon:dp('B08WRPBBPY'), rakuten:rak('アディクション アイシャドウ') },
 
     { id:'e6', brand:'MAJOLICA MAJORCA', name:'シャドーカスタマイズ',
       desc:'ラメ・マット・パール全入りでドラマチックな目元に仕上がる',
-      price:715, finish:['グリッター','ラメ','マット'], colors:['ピンク','ゴールド','パープル'],
-      look:['gorgeous','trendy'], tone:['ブルベ夏','ブルベ冬','イエベ春'], bg:'#9060A8', icon:'👁',
+      price:715, finish:['グリッター','ラメ','マット'], look:['gorgeous','trendy'],
+      tone:['ブルベ夏','ブルベ冬','イエベ春'], popular:'定番人気', bg:'#9060A8', icon:'👁',
       amazon:dp('B09XXCMBGY'), rakuten:rak('マジョリカマジョルカ シャドーカスタマイズ') },
 
     { id:'e7', brand:'Visée AVANT', name:'アイパレット',
       desc:'洗練されたカラーバランスで彫り深い目元を演出',
-      price:1760, finish:['シマー','マット','パール'], colors:['ブラウン','グレー','ピンク'],
-      look:['office','trendy'], tone:['ブルベ夏','ブルベ冬'], bg:'#687080', icon:'👁',
+      price:1760, finish:['シマー','マット','パール'], look:['office','trendy'],
+      tone:['ブルベ夏','ブルベ冬'], popular:'定番人気', bg:'#687080', icon:'👁',
       amazon:amz('Visee AVANT アイパレット'), rakuten:rak('ヴィセアヴァン アイパレット') },
+
+    { id:'e8', brand:'WHOMEE', name:'アイシャドウパレット',
+      desc:'イガリシノスケ監修。旬のカラーが絶妙にブレンドされた4色パレット',
+      price:1430, finish:['シマー','マット'], look:['natural','trendy'],
+      tone:['イエベ春','ブルベ夏'], popular:'SNS話題', bg:'#B09070', icon:'👁',
+      amazon:amz('WHOMEE アイシャドウ'), rakuten:rak('フーミー アイシャドウパレット') },
+
+    { id:'e9', brand:'LUNASOL', name:'スキンモデリングアイズ',
+      desc:'肌に溶け込むようなニュアンスカラー。大人の上品な目元を演出',
+      price:5060, finish:['シマー','パール','シアー'], look:['gorgeous','office'],
+      tone:['ブルベ夏','イエベ春'], popular:'殿堂入り', bg:'#907080', icon:'👁',
+      amazon:amz('LUNASOL スキンモデリングアイズ'), rakuten:rak('ルナソル スキンモデリングアイズ') },
+
+    { id:'e10', brand:'JILL STUART', name:'クリスタルブルーム アイカラーパレット',
+      desc:'透け感ある繊細パールが目元に輝きをプラス。春夏トレンドカラー',
+      price:3850, finish:['シマー','グリッター','シアー'], look:['gorgeous','trendy'],
+      tone:['ブルベ夏','ブルベ冬'], popular:'新作話題', bg:'#A080B0', icon:'👁',
+      amazon:amz('ジルスチュアート アイカラーパレット'), rakuten:rak('ジルスチュアート アイシャドウ') },
   ],
 
   skin: [
     { id:'s1', brand:'CANMAKE', name:'マシュマロフィニッシュパウダー',
       desc:'ふわふわのマット仕上がり。毛穴・テカリをしっかりカバー',
-      price:880, finish:['マット','パウダー'], colors:['オークル','ベージュ','ピンク'],
-      look:['natural','casual','office'], tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], bg:'#C8A878', icon:'✨',
+      price:880, finish:['マット','パウダー'], look:['natural','casual','office'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'殿堂入り', bg:'#C8A878', icon:'✨',
       img:'https://images-na.ssl-images-amazon.com/images/P/B005MVFRXM._SL300_.jpg',
       amazon:'https://amzn.to/4uBLxLZ', rakuten:rak('CANMAKE マシュマロフィニッシュパウダー') },
 
     { id:'s2', brand:'CEZANNE', name:'UVウルトラフィットベース',
       desc:'SPF50+ PA++++。軽い使用感で崩れをしっかり防ぐ下地',
-      price:748, finish:['セミマット'], colors:['ピンクベージュ','ナチュラルベージュ'],
-      look:['natural','casual','office'], tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], bg:'#B89868', icon:'✨',
+      price:748, finish:['セミマット'], look:['natural','casual','office'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'定番人気', bg:'#B89868', icon:'✨',
       img:'https://images-na.ssl-images-amazon.com/images/P/B005MI8T4O._SL300_.jpg',
       amazon:'https://amzn.to/4vMlqmz', rakuten:rak('CEZANNE UVウルトラフィットベース') },
 
     { id:'s3', brand:'excel', name:'スキンケアUV',
       desc:'スキンケア成分補給しながら紫外線カット。化粧崩れも防ぐ',
-      price:1980, finish:['ツヤ','セミマット'], colors:['ナチュラル'],
-      look:['natural','office'], tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], bg:'#D8B888', icon:'✨',
+      price:1980, finish:['ツヤ','セミマット'], look:['natural','office'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'定番人気', bg:'#D8B888', icon:'✨',
       img:'https://images-na.ssl-images-amazon.com/images/P/B0C8N9JQZM._SL300_.jpg',
       amazon:'https://amzn.to/4uEC7PQ', rakuten:rak('excel スキンケアUV') },
 
     { id:'s4', brand:'Shiseido', name:'インテグレート グレイシィ',
       desc:'ファンデ・日焼け止め・スキンケア一体型。素肌感ある仕上がり',
-      price:1760, finish:['ツヤ','セミマット'], colors:['オークル','ベージュ','ピンクオークル'],
-      look:['natural','office'], tone:['イエベ春','イエベ秋','ブルベ夏'], bg:'#B89070', icon:'✨',
+      price:1760, finish:['ツヤ','セミマット'], look:['natural','office'],
+      tone:['イエベ春','イエベ秋','ブルベ夏'], popular:'定番人気', bg:'#B89070', icon:'✨',
       img:'https://images-na.ssl-images-amazon.com/images/P/B008MH8V0Y._SL300_.jpg',
       amazon:'https://amzn.to/4fFfpTX', rakuten:rak('インテグレート グレイシィ ファンデーション') },
 
     { id:'s5', brand:'NARS', name:'ナチュラルラディアント ファンデ',
       desc:'素肌のような自然な輝き。24時間持続処方で崩れにくい',
-      price:7150, finish:['ツヤ','ナチュラル'], colors:['全30色展開'],
-      look:['gorgeous','office'], tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], bg:'#9C8060', icon:'✨',
+      price:7150, finish:['ツヤ','ナチュラル'], look:['gorgeous','office'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'定番人気', bg:'#9C8060', icon:'✨',
       img:'https://images-na.ssl-images-amazon.com/images/P/B07B49DG7B._SL300_.jpg',
       amazon:'https://amzn.to/3S859tJ', rakuten:rak('NARS ナチュラルラディアント') },
 
     { id:'s6', brand:'SUQQU', name:'イクイップト フルイド ファンデ',
       desc:'肌本来の美しさを引き出すスキンケアベース。まるで素肌感',
-      price:8800, finish:['ツヤ','セミマット'], colors:['全20色展開'],
-      look:['gorgeous'], tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], bg:'#887050', icon:'✨',
+      price:8800, finish:['ツヤ','セミマット'], look:['gorgeous'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'定番人気', bg:'#887050', icon:'✨',
       amazon:amz('SUQQU イクイップト フルイド ファンデーション'), rakuten:rak('SUQQU ファンデーション') },
 
     { id:'s7', brand:'Bioré', name:'UV アクアリッチ ウォータリーエッセンス',
       desc:'SPF50+ PA++++。みずみずしくさらっとした日焼け止めの定番',
-      price:880, finish:['さらさら'], colors:['無色'],
-      look:['natural','casual'], tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], bg:'#88B8D8', icon:'☀️',
+      price:880, finish:['さらさら'], look:['natural','casual'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'殿堂入り', bg:'#88B8D8', icon:'☀️',
       img:'https://images-na.ssl-images-amazon.com/images/P/B07ND9JXWJ._SL300_.jpg',
       amazon:'https://amzn.to/4aMGAbY', rakuten:rak('ビオレ UV アクアリッチ') },
 
     { id:'s8', brand:'Anessa', name:'パーフェクトUV スキンケアミルク',
       desc:'汗・水・こすれに強い高UVカット。スキンケア成分で肌も守る',
-      price:2530, finish:['ミルク'], colors:['無色'],
-      look:['casual','natural'], tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], bg:'#D8B840', icon:'☀️',
+      price:2530, finish:['ミルク'], look:['casual','natural'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'殿堂入り', bg:'#D8B840', icon:'☀️',
       img:'https://images-na.ssl-images-amazon.com/images/P/B0CSSVF9GQ._SL300_.jpg',
       amazon:'https://www.amazon.co.jp/dp/B0CSSVF9GQ?tag=96nekozizi-22-22', rakuten:rak('アネッサ パーフェクトUV') },
+
+    { id:'s9', brand:'Estée Lauder', name:'ダブル ウェア ステイ イン プレイス',
+      desc:'24時間崩れないと世界的評判のリキッドファンデ。汗・皮脂に強い',
+      price:8910, finish:['セミマット','ナチュラル'], look:['gorgeous','office'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'殿堂入り', bg:'#A08860', icon:'✨',
+      amazon:amz('エスティローダー ダブルウェア'), rakuten:rak('エスティローダー ダブルウェア') },
+
+    { id:'s10', brand:'Shiseido', name:'マキアージュ ドラマティックスキンセンサーベース',
+      desc:'肌状態を感知してテカリもカサつきも同時にケア。崩れにくい下地',
+      price:1980, finish:['セミマット'], look:['natural','office'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'SNS話題', bg:'#D0B890', icon:'✨',
+      amazon:amz('マキアージュ スキンセンサーベース'), rakuten:rak('マキアージュ スキンセンサーベース') },
   ],
 
   cheek: [
     { id:'c1', brand:'CANMAKE', name:'クリームチーク',
       desc:'クリームタイプで肌に密着。ふんわり自然な血色感に',
-      price:748, finish:['クリーム'], colors:['ピンク','オレンジ','コーラル','レッド'],
-      look:['natural','casual'], tone:['イエベ春','ブルベ夏'], bg:'#F0A0A8', icon:'🌸',
+      price:748, finish:['クリーム'], look:['natural','casual'],
+      tone:['イエベ春','ブルベ夏'], popular:'殿堂入り', bg:'#F0A0A8', icon:'🌸',
       amazon:dp('B0971ZSGFT'), rakuten:rak('CANMAKE クリームチーク') },
 
     { id:'c2', brand:'CEZANNE', name:'チークブラッシュ',
       desc:'ふんわり発色するパウダーチーク。自然な血色感を演出',
-      price:528, finish:['パウダー'], colors:['ピンク','コーラル','オレンジ','テラコッタ'],
-      look:['natural','casual','office'], tone:['イエベ春','イエベ秋'], bg:'#D8A888', icon:'🌸',
+      price:528, finish:['パウダー'], look:['natural','casual','office'],
+      tone:['イエベ春','イエベ秋'], popular:'定番人気', bg:'#D8A888', icon:'🌸',
       amazon:dp('B0C82DRL2Y'), rakuten:rak('CEZANNE チークブラッシュ') },
 
     { id:'c3', brand:'NARS', name:'ブラッシュ',
       desc:'一日中続く発色のよいパウダーチーク。多彩なカラー展開',
-      price:4180, finish:['パウダー','シマー'], colors:['ピンク','コーラル','ローズ','ピーチ'],
-      look:['gorgeous','trendy'], tone:['ブルベ夏','ブルベ冬','イエベ春'], bg:'#D05878', icon:'🌸',
+      price:4180, finish:['パウダー','シマー'], look:['gorgeous','trendy'],
+      tone:['ブルベ夏','ブルベ冬','イエベ春'], popular:'殿堂入り', bg:'#D05878', icon:'🌸',
       amazon:dp('B016WBWIEG'), rakuten:rak('NARS ブラッシュ') },
 
     { id:'c4', brand:'RMK', name:'インジーニアス パウダーチークス N',
       desc:'上品な血色感を与えるパウダーチーク。透明感ある仕上がり',
-      price:3080, finish:['パウダー','シマー'], colors:['ピンク','コーラル','ベージュ'],
-      look:['gorgeous','office'], tone:['ブルベ夏','イエベ春'], bg:'#C07888', icon:'🌸',
+      price:3080, finish:['パウダー','シマー'], look:['gorgeous','office'],
+      tone:['ブルベ夏','イエベ春'], popular:'定番人気', bg:'#C07888', icon:'🌸',
       amazon:dp('B00OIDBUUY'), rakuten:rak('RMK パウダーチークス') },
 
     { id:'c5', brand:'Shiseido', name:'インテグレート チーク＆ハイライター',
       desc:'チークとハイライトが一体化。立体感ある顔立ちに仕上がる',
-      price:1650, finish:['パウダー','ハイライト'], colors:['ピンク','オレンジ'],
-      look:['natural','trendy'], tone:['イエベ春','ブルベ夏'], bg:'#E0B0A0', icon:'🌸',
+      price:1650, finish:['パウダー','ハイライト'], look:['natural','trendy'],
+      tone:['イエベ春','ブルベ夏'], popular:'定番人気', bg:'#E0B0A0', icon:'🌸',
       amazon:dp('B01LSJA42U'), rakuten:rak('インテグレート チーク') },
+
+    { id:'c6', brand:'CLIO', name:'プリズム エアー ブラッシャー',
+      desc:'韓国発・空気をまとったような軽い付け心地。発色が鮮やかで持ちも良い',
+      price:1650, finish:['パウダー','シマー'], look:['trendy','gorgeous'],
+      tone:['ブルベ夏','ブルベ冬'], popular:'SNS話題', bg:'#E080A0', icon:'🌸',
+      amazon:amz('CLIO プリズム エアー ブラッシャー'), rakuten:rak('クリオ プリズム エアー ブラッシャー') },
+
+    { id:'c7', brand:'Clé de Peau', name:'ブラッシュデュオ',
+      desc:'2色セットで自在にグラデーション。上品なツヤ感と透明感を演出',
+      price:8800, finish:['パウダー','シマー'], look:['gorgeous','office'],
+      tone:['ブルベ夏','イエベ春','ブルベ冬'], popular:'定番人気', bg:'#D090A0', icon:'🌸',
+      amazon:amz('クレドポーボーテ ブラッシュデュオ'), rakuten:rak('クレドポーボーテ ブラッシュ') },
   ],
 
   eyebrow: [
     { id:'b1', brand:'CEZANNE', name:'パウダーアイブロウ',
       desc:'3色パレットで自然な立体感のある眉に。初心者でも使いやすい',
-      price:528, finish:['パウダー'], colors:['ブラウン','グレー','アッシュ'],
-      look:['natural','casual','office'], tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], bg:'#806040', icon:'🖊',
+      price:528, finish:['パウダー'], look:['natural','casual','office'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'定番人気', bg:'#806040', icon:'🖊',
       amazon:dp('B08W3V1PP6'), rakuten:rak('CEZANNE パウダーアイブロウ') },
 
     { id:'b2', brand:'excel', name:'パウダー&ペンシルアイブロウEX',
       desc:'パウダーとペンシルを組み合わせて思い通りの眉を実現',
-      price:1320, finish:['パウダー','ペンシル'], colors:['ブラウン','アッシュ','ライトブラウン'],
-      look:['natural','office','trendy'], tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], bg:'#604020', icon:'🖊',
+      price:1320, finish:['パウダー','ペンシル'], look:['natural','office','trendy'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'定番人気', bg:'#604020', icon:'🖊',
       amazon:dp('B015FG6ZN4'), rakuten:rak('excel アイブロウ') },
 
     { id:'b3', brand:'KATE', name:'デザイニングアイブロウ3D',
       desc:'3Dアイブロウで立体的でリアルな毛並みを再現',
-      price:1430, finish:['パウダー','ペンシル'], colors:['ブラウン','アッシュ','グレー'],
-      look:['trendy','gorgeous'], tone:['ブルベ夏','ブルベ冬','イエベ秋'], bg:'#503020', icon:'🖊',
+      price:1430, finish:['パウダー','ペンシル'], look:['trendy','gorgeous'],
+      tone:['ブルベ夏','ブルベ冬','イエベ秋'], popular:'SNS話題', bg:'#503020', icon:'🖊',
       amazon:dp('B071XTGPN2'), rakuten:rak('KATE デザイニングアイブロウ') },
 
     { id:'b4', brand:'CANMAKE', name:'パウダーアイブロウ',
       desc:'やわらかなパウダーで自然な眉に。にじみにくい処方',
-      price:550, finish:['パウダー'], colors:['ナチュラルブラウン','グレーブラウン'],
-      look:['natural','casual'], tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], bg:'#987050', icon:'🖊',
+      price:550, finish:['パウダー'], look:['natural','casual'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'定番人気', bg:'#987050', icon:'🖊',
       amazon:dp('B0049EESM4'), rakuten:rak('CANMAKE パウダーアイブロウ') },
+
+    { id:'b5', brand:'ヘビーローテーション', name:'カラーリングアイブロウR',
+      desc:'染めたような自然な眉色に。落ちにくいウォータープルーフ処方',
+      price:748, finish:['パウダー'], look:['natural','casual','trendy'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'殿堂入り', bg:'#705030', icon:'🖊',
+      amazon:amz('ヘビーローテーション カラーリングアイブロウ'), rakuten:rak('ヘビーローテーション カラーリングアイブロウ') },
+
+    { id:'b6', brand:'Shiseido', name:'インテグレート スナイパーアイブロウ',
+      desc:'1本で描き・ぼかし・ブラシの3役。ナチュラルな立体眉が簡単に',
+      price:1100, finish:['ペンシル'], look:['natural','office'],
+      tone:['イエベ春','ブルベ夏','イエベ秋','ブルベ冬'], popular:'定番人気', bg:'#806848', icon:'🖊',
+      amazon:amz('インテグレート スナイパーアイブロウ'), rakuten:rak('インテグレート スナイパーアイブロウ') },
   ],
 };
 
@@ -520,12 +608,14 @@ function renderProducts(items) {
   grid.innerHTML = items.map(p => `
     <div class="product-card">
       ${p.img
-        ? `<div class="product-img" style="background:${p.bg};padding:0;overflow:hidden">
+        ? `<div class="product-img" style="background:${p.bg};padding:0;overflow:hidden;position:relative">
              <img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:contain;padding:8px" onerror="this.parentElement.innerHTML='<div style=\\'font-size:32px;margin-bottom:4px\\'>${p.icon}</div><div class=\\'brand-badge\\'>${p.brand}</div>'">
+             ${p.popular ? `<div class="popular-badge" style="${popularStyle(p.popular)}">${p.popular}</div>` : ''}
            </div>`
-        : `<div class="product-img" style="background:linear-gradient(135deg,${p.bg},${adjColor(p.bg,-30)})">
+        : `<div class="product-img" style="background:linear-gradient(135deg,${p.bg},${adjColor(p.bg,-30)});position:relative">
              <div style="font-size:32px">${p.icon}</div>
              <div class="brand-badge">${p.brand}</div>
+             ${p.popular ? `<div class="popular-badge" style="${popularStyle(p.popular)}">${p.popular}</div>` : ''}
            </div>`
       }
       <div class="product-info">
