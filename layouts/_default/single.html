@@ -16,10 +16,11 @@
       </header>
 
       {{ if .Params.zone }}
+      {{ $toolPath := cond (eq .Lang "ja") "/tool/" (printf "/%s/tool/" .Lang) }}
       <div class="tool-cta">
         <p>💄 <strong>{{ .Title | truncate 25 }}</strong> に関係するコスメをツールで絞り込んで探せます</p>
-        <a href="/tool/?zone={{ .Params.zone }}{{ if .Params.look }}&look={{ .Params.look }}{{ end }}{{ if .Params.budget }}&budget={{ .Params.budget }}{{ end }}">
-          コスメマネキンで探す →
+        <a href="{{ $toolPath }}?zone={{ .Params.zone }}{{ if .Params.look }}&look={{ .Params.look }}{{ end }}{{ if .Params.budget }}&budget={{ .Params.budget }}{{ end }}">
+          {{ if eq .Lang "en" }}Find in the Cosme Finder →{{ else }}コスメマネキンで探す →{{ end }}
         </a>
       </div>
       {{ end }}
@@ -29,10 +30,11 @@
       </div>
 
       {{ if .Params.zone }}
+      {{ $toolPath := cond (eq .Lang "ja") "/tool/" (printf "/%s/tool/" .Lang) }}
       <div class="tool-cta" style="margin-top:36px">
-        <p>この記事で紹介したコスメをツールで比較・検索できます</p>
-        <a href="/tool/?zone={{ .Params.zone }}{{ if .Params.look }}&look={{ .Params.look }}{{ end }}">
-          🔍 コスメマネキンで比較する
+        <p>{{ if eq .Lang "en" }}Find and compare cosmetics from this article in our tool{{ else }}この記事で紹介したコスメをツールで比較・検索できます{{ end }}</p>
+        <a href="{{ $toolPath }}?zone={{ .Params.zone }}{{ if .Params.look }}&look={{ .Params.look }}{{ end }}">
+          {{ if eq .Lang "en" }}🔍 Compare in Cosme Finder{{ else }}🔍 コスメマネキンで比較する{{ end }}
         </a>
       </div>
       {{ end }}
@@ -40,45 +42,75 @@
   </main>
 
   <!-- ── Sidebar ── -->
+  {{ $tp := cond (eq .Lang "ja") "/tool/" (printf "/%s/tool/" .Lang) }}
   <aside class="sidebar">
     <div class="sidebar-block">
-      <h3>💄 カテゴリで探す</h3>
+      {{ if eq .Lang "en" }}<h3>💄 Browse by Zone</h3>{{ else }}<h3>💄 カテゴリで探す</h3>{{ end }}
       <ul>
-        <li><a href="/tool/?zone=lip">💋 リップ</a></li>
-        <li><a href="/tool/?zone=eye">👁 アイシャドウ</a></li>
-        <li><a href="/tool/?zone=skin">✨ ファンデ・下地</a></li>
-        <li><a href="/tool/?zone=cheek">🌸 チーク</a></li>
-        <li><a href="/tool/?zone=eyebrow">🖊 アイブロウ</a></li>
+        {{ if eq .Lang "en" }}
+        <li><a href="{{ $tp }}?zone=lip">💋 Lip</a></li>
+        <li><a href="{{ $tp }}?zone=eye">👁 Eye Shadow</a></li>
+        <li><a href="{{ $tp }}?zone=skin">✨ Foundation / Primer</a></li>
+        <li><a href="{{ $tp }}?zone=cheek">🌸 Blush</a></li>
+        <li><a href="{{ $tp }}?zone=eyebrow">🖊 Eyebrow</a></li>
+        {{ else }}
+        <li><a href="{{ $tp }}?zone=lip">💋 リップ</a></li>
+        <li><a href="{{ $tp }}?zone=eye">👁 アイシャドウ</a></li>
+        <li><a href="{{ $tp }}?zone=skin">✨ ファンデ・下地</a></li>
+        <li><a href="{{ $tp }}?zone=cheek">🌸 チーク</a></li>
+        <li><a href="{{ $tp }}?zone=eyebrow">🖊 アイブロウ</a></li>
+        {{ end }}
       </ul>
     </div>
 
     <div class="sidebar-block">
-      <h3>💰 予算別で探す</h3>
+      {{ if eq .Lang "en" }}<h3>💰 Browse by Budget</h3>{{ else }}<h3>💰 予算別で探す</h3>{{ end }}
       <ul>
-        <li><a href="/tool/?budget=low">～¥1,000 プチプラ</a></li>
-        <li><a href="/tool/?budget=mid">¥1,000～¥3,000 ミドル</a></li>
-        <li><a href="/tool/?budget=high">¥3,000～ デパコス</a></li>
+        {{ if eq .Lang "en" }}
+        <li><a href="{{ $tp }}?budget=low">Under ¥1,000</a></li>
+        <li><a href="{{ $tp }}?budget=mid">¥1,000–¥3,000</a></li>
+        <li><a href="{{ $tp }}?budget=high">¥3,000+</a></li>
+        {{ else }}
+        <li><a href="{{ $tp }}?budget=low">～¥1,000 プチプラ</a></li>
+        <li><a href="{{ $tp }}?budget=mid">¥1,000～¥3,000 ミドル</a></li>
+        <li><a href="{{ $tp }}?budget=high">¥3,000～ デパコス</a></li>
+        {{ end }}
       </ul>
     </div>
 
     <div class="sidebar-block">
-      <h3>✨ メイクの雰囲気</h3>
+      {{ if eq .Lang "en" }}<h3>✨ Browse by Look</h3>{{ else }}<h3>✨ メイクの雰囲気</h3>{{ end }}
       <ul>
-        <li><a href="/tool/?look=natural">🌿 ナチュラル</a></li>
-        <li><a href="/tool/?look=trendy">🔥 トレンド</a></li>
-        <li><a href="/tool/?look=gorgeous">💎 ゴージャス</a></li>
-        <li><a href="/tool/?look=office">💼 オフィス</a></li>
-        <li><a href="/tool/?look=casual">👟 カジュアル</a></li>
+        {{ if eq .Lang "en" }}
+        <li><a href="{{ $tp }}?look=natural">🌿 Natural</a></li>
+        <li><a href="{{ $tp }}?look=trendy">🔥 Trendy</a></li>
+        <li><a href="{{ $tp }}?look=gorgeous">💎 Gorgeous</a></li>
+        <li><a href="{{ $tp }}?look=office">💼 Office</a></li>
+        <li><a href="{{ $tp }}?look=casual">👟 Casual</a></li>
+        {{ else }}
+        <li><a href="{{ $tp }}?look=natural">🌿 ナチュラル</a></li>
+        <li><a href="{{ $tp }}?look=trendy">🔥 トレンド</a></li>
+        <li><a href="{{ $tp }}?look=gorgeous">💎 ゴージャス</a></li>
+        <li><a href="{{ $tp }}?look=office">💼 オフィス</a></li>
+        <li><a href="{{ $tp }}?look=casual">👟 カジュアル</a></li>
+        {{ end }}
       </ul>
     </div>
 
     <div class="sidebar-block">
-      <h3>🎨 パーソナルカラー</h3>
+      {{ if eq .Lang "en" }}<h3>🎨 Personal Color</h3>{{ else }}<h3>🎨 パーソナルカラー</h3>{{ end }}
       <ul>
-        <li><a href="/tool/?tone=イエベ春">🍑 イエベ春</a></li>
-        <li><a href="/tool/?tone=イエベ秋">🍂 イエベ秋</a></li>
-        <li><a href="/tool/?tone=ブルベ夏">🌸 ブルベ夏</a></li>
-        <li><a href="/tool/?tone=ブルベ冬">❄️ ブルベ冬</a></li>
+        {{ if eq .Lang "en" }}
+        <li><a href="{{ $tp }}?tone=イエベ春">🍑 Warm Spring</a></li>
+        <li><a href="{{ $tp }}?tone=イエベ秋">🍂 Warm Autumn</a></li>
+        <li><a href="{{ $tp }}?tone=ブルベ夏">🌸 Cool Summer</a></li>
+        <li><a href="{{ $tp }}?tone=ブルベ冬">❄️ Cool Winter</a></li>
+        {{ else }}
+        <li><a href="{{ $tp }}?tone=イエベ春">🍑 イエベ春</a></li>
+        <li><a href="{{ $tp }}?tone=イエベ秋">🍂 イエベ秋</a></li>
+        <li><a href="{{ $tp }}?tone=ブルベ夏">🌸 ブルベ夏</a></li>
+        <li><a href="{{ $tp }}?tone=ブルベ冬">❄️ ブルベ冬</a></li>
+        {{ end }}
       </ul>
     </div>
 
